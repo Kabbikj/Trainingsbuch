@@ -115,9 +115,11 @@ button, input, textarea { font: inherit; color: inherit; }
 .tabs { display: flex; gap: 4px; }
 .tab {
   background: none; border: 0; cursor: pointer;
-  padding: 8px 10px; border-radius: 8px;
-  font-weight: 600; font-size: 15px; color: var(--muted);
+  padding: 7px 8px; border-radius: 8px;
+  font-weight: 600; font-size: 14px; color: var(--muted);
 }
+.tabs { gap: 2px; }
+@media (max-width: 420px) { .date-btn small { display: none; } .date-btn { font-size: 18px; } }
 .tab[aria-current="page"] { color: var(--wine); background: var(--surface-2); }
 .chips { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0 10px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
@@ -137,7 +139,18 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
   margin: 0; color: var(--wine);
 }
 .wo-meta { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
-.status { margin: 2px 0 0; color: var(--faint); font-size: 13px; min-height: 18px; }
+.status { margin: 6px 0 0; color: var(--ink); font-size: 14px; padding: 6px 10px; border-radius: 8px; background: var(--gold-soft); }
+.status[hidden] { display: none; }
+.wo-title { display: flex; align-items: center; gap: 10px; }
+.wo-title h1 { flex: 1; min-width: 0; }
+.wo-head.compact h1 { font-size: 24px; }
+.view-switch { flex: none; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--wine); display: grid; place-items: center; cursor: pointer; padding: 0; }
+.view-switch svg { width: 22px; height: 22px; }
+.f-hint { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+.f-hint b { color: var(--rose); font-weight: 600; font-size: 15px; }
+.f-cuedet { margin: 12px 0 0; }
+.f-cuedet summary { cursor: pointer; font-size: 14px; color: var(--muted); padding: 2px 0; }
+.f-cuedet .f-cue { margin-top: 6px; }
 .banner {
   margin: 14px 0 0; padding: 10px 12px; border-radius: 10px;
   background: var(--gold-soft); border-left: 3px solid var(--gold-line); font-size: 15px;
@@ -216,6 +229,33 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
 .linkish.pain { color: var(--muted); }
 .linkish.pain[aria-pressed="true"] { color: var(--gold); background: var(--gold-soft); border-radius: 8px; padding: 4px 10px; }
 .f-pain { margin: 6px 0 0; text-align: center; }
+.f-notes { margin: 14px 0 0; }
+.f-lastnote { margin: 0 0 6px; font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; white-space: pre-line; }
+.f-lastnote.open { display: block; }
+.f-note { width: 100%; min-height: 48px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 16px; resize: none; overflow: hidden; display: block; }
+.f-note:focus { border-color: var(--rose); outline: none; }
+.rest-note { margin: 10px 0 0; text-align: left; }
+.f-icons { display: flex; gap: 8px; margin: 8px 0 0; }
+.f-icon { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: 18px; display: grid; place-items: center; cursor: pointer; padding: 0; }
+.f-icon svg { width: 20px; height: 20px; }
+.f-icon[aria-expanded="true"] { color: var(--wine); border-color: var(--wine); }
+.f-icon-pain { filter: grayscale(1); opacity: 0.7; }
+.f-icon-pain[aria-pressed="true"] { filter: none; opacity: 1; background: var(--gold-soft); border-color: var(--gold-line); }
+.f-hist { margin: 8px 0 0; }
+.hist-note { display: block; font-size: 13px; color: var(--faint); margin: 2px 0 4px; }
+.f-arrows { margin-left: auto; display: flex; gap: 8px; align-self: center; }
+.f-arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); color: var(--wine); font-size: 26px; line-height: 1; cursor: pointer; padding: 0 0 3px; }
+.f-arrow:disabled { opacity: 0.3; cursor: default; }
+.f-open { font-size: 13px; padding: 0; }
+.f-wrapnote { margin: 8px 0 0; padding: 6px 10px; border-radius: 8px; background: var(--gold-soft); font-size: 14px; }
+.f-openlist { display: grid; gap: 8px; margin: 12px 0 12px; }
+.f-openitem { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2); cursor: pointer; }
+.f-openitem b { font-size: 15px; color: var(--ink); }
+.f-openitem span { font-size: 13px; color: var(--muted); }
+.hold { margin: 12px 0 0; padding: 12px; border-radius: 12px; background: var(--surface-2); text-align: center; }
+.hold-lab { margin: 0; font-size: 14px; color: var(--muted); font-weight: 600; }
+.hold-time { font-family: var(--serif); font-weight: 700; font-size: 44px; line-height: 1.1; color: var(--wine); min-height: 8px; }
+.hold-btn { margin: 8px 0 0; min-height: 44px; padding: 0 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font-weight: 700; font-size: 16px; color: var(--wine); cursor: pointer; }
 .rir { margin: 12px 0 0; }
 .rir p { margin: 0 0 6px; font-size: 13px; color: var(--faint); }
 .rir-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
@@ -244,6 +284,32 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
 .h-body { padding: 0 14px 12px; font-size: 14px; color: var(--muted); }
 .h-body p { margin: 4px 0; }
 .h-body b { color: var(--ink); font-weight: 600; }
+.wbox { margin: 16px 0 0; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.wbox .wh { margin: 0 0 6px; font-size: 17px; font-weight: 700; color: var(--ink); }
+.wbox p { margin: 0 0 6px; color: var(--muted); font-size: 15px; }
+.wbox .wsub { font-size: 13px; color: var(--faint); }
+.wrow { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin: 8px 0 0; }
+.wfld input { font-size: 24px; }
+.wsave { margin: 0; min-height: 48px; padding: 0 18px; width: auto; }
+.wadv { border-left: 4px solid var(--line); }
+.wadv-ok { border-left-color: var(--gold-line); }
+.wadv-more, .wadv-less { border-left-color: var(--rose); }
+.wadv .wh { font-family: var(--serif); font-size: 22px; color: var(--wine); }
+.wgoal { font-size: 13px !important; color: var(--faint) !important; }
+.wfacts { font-size: 14px !important; }
+.wtip { padding: 8px 10px; border-radius: 8px; background: var(--gold-soft); color: var(--ink) !important; font-size: 14px !important; }
+.wchart { display: block; width: 100%; height: auto; margin: 10px 0 2px; }
+.wchart .wgrid { stroke: var(--line); stroke-width: 1; }
+.wchart .wlabel { fill: var(--faint); font-size: 10px; font-family: var(--sans); }
+.wchart .wavg { fill: none; stroke: var(--wine); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.wchart .wdot { fill: var(--gold-line); }
+.wlegend { font-size: 12px !important; color: var(--faint) !important; }
+.wuntil { display: flex; align-items: center; gap: 8px; margin: 12px 0 4px; font-size: 15px; color: var(--muted); }
+.wuntil input { font-size: 16px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+.wlist { list-style: none; margin: 0; padding: 0; }
+.wlist li { display: grid; grid-template-columns: 1fr auto 28px; align-items: center; gap: 8px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 15px; color: var(--muted); }
+.wlist li:first-child { border-top: 0; }
+.wlist b { color: var(--ink); font-weight: 600; }
 .backup { margin: 26px 0 0; }
 .backup p { margin: 0 0 8px; color: var(--muted); font-size: 15px; }
 .backup .backup-last { color: var(--faint); font-size: 14px; }
@@ -332,6 +398,7 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
       <nav class="tabs" aria-label="Ansicht">
         <button class="tab" type="button" data-view="heute">Training</button>
         <button class="tab" type="button" data-view="verlauf">Verlauf</button>
+        <button class="tab" type="button" data-view="gewicht">Gewicht</button>
       </nav>
     </div>
     <div class="chips" id="chips" role="group" aria-label="Einheit wählen"></div>
@@ -372,6 +439,7 @@ const EX = {
   ruderBauch:   { n: 'Kurzhantelrudern bauchlings auf der Schrägbank', m: 'Rücken · Bizeps', t: 'wr', comp: true, eq: 'kh', u: SL + 'chest-supported-dumbbell-row/' },
   dips:         { n: 'Dips', m: 'Brust · Trizeps', t: 'assist', comp: true, u: SL + 'assisted-dips/' },
   liegTriz:     { n: 'Liegendes Trizepsstrecken', m: 'Trizeps', t: 'wr', eq: 'kh', u: SL + 'dumbbell-lying-triceps-extension/' },
+  trizDrueck:   { n: 'Trizepsdrücken am Kabel mit V-Griff', m: 'Trizeps', t: 'wr', eq: 'kabel', u: 'https://gymnation.com/exercise-library/cable-triceps-pushdown-v-bar' },
   carry:        { n: 'Suitcase Carry', m: 'Rumpf · Griff', t: 'carry', eq: 'kh', u: 'https://us.physitrack.com/home-exercise-video/suitcase-carry-with-a-dumbbell' },
   liegestuetz:  { n: 'Liegestütze auf Kurzhanteln', m: 'Brust · Trizeps', t: 'reps', u: SL + 'push-up' },
   facepull:     { n: 'Face Pulls', m: 'Hintere Schulter · oberer Rücken', t: 'wr', eq: 'kabel', u: SL + 'face-pull/' },
@@ -405,10 +473,10 @@ const CUE = {
   latzug: 'Mit den Ellbogen ziehen, Schulterblätter in die Arschtaschen',
   trizKopf: 'Kabel oben, Ellbogen zeigen nach vorn, unten volle Dehnung',
   curl: 'Bank auf 45–60°, Arme hängen hinter dem Körper, langsam ablassen',
-  seitstuetz: 'Hüfte nicht nach hinten, Unterarm in den Boden drücken, Form vor Dauer, links zuerst, rechts gleich lang',
-  handgelenk1: 'Unterarme auf der Bank, nur die Handgelenke bewegen',
-  handgelenk2: 'Unterarme auf der Bank, nur die Handgelenke bewegen, langsam ablassen',
-  seitheben: 'Oberkörper etwa 15° nach vorn, Arme etwas vor dem Körper. Hanteln mit den Ellbogen zu den Wänden schieben statt hochheben, ohne Schwung bis Schulterhöhe, langsam ablassen, Schultern weg von den Ohren',
+  seitstuetz: 'Hüfte nicht nach hinten, Unterarm in den Boden drücken, Schulter weg vom Ohr, Form vor Dauer, links zuerst, rechts gleich lang',
+  handgelenk1: 'Unterarme auf der Bank, nur die Handgelenke bewegen, Hantel bis in die Fingerspitzen abrollen lassen und wieder einrollen',
+  handgelenk2: 'Unterarme auf der Bank, nur die Handgelenke bewegen, Hantel bis in die Fingerspitzen abrollen lassen und langsam wieder einrollen',
+  seitheben: 'Oberkörper etwa 15° nach vorn, Arme etwas vor dem Körper, Oberkörper nicht eindrehen. Hanteln mit den Ellbogen zu den Wänden schieben statt hochheben, ohne Schwung bis Schulterhöhe, langsam ablassen, Schultern weg von den Ohren',
   nacken: 'Kopf über der Bankkante, Scheibe mit Handtuch auf der Stirn, Kinn zur Brust rollen, nur bis waagerecht absenken',
   rdl1: 'Hüfte nach hinten schieben, Rücken bleibt gerade, Zug hinten im Oberschenkel',
   rdl2: 'Hüfte nach hinten schieben, Rücken bleibt gerade, Hanteln nah an den Beinen, Zug hinten im Oberschenkel',
@@ -417,6 +485,7 @@ const CUE = {
   dips1: 'Oberkörper leicht nach vorn, nur so tief, wie es für die Schultern angenehm ist',
   dips2: 'Oberkörper leicht nach vorn, nur so tief, wie es für die Schultern angenehm ist; später Zusatzgewicht am Gürtel',
   liegTriz: 'Kurzhanteln im Hammergriff neben den Kopf senken, Oberarme fest, nur so tief, wie die Ellbogen ruhig bleiben',
+  trizDrueck: 'Beide Hände an einem Kabel, V-Griff, Oberarme fest am Körper, unten ganz strecken, langsam zurück. Übernimmt die rechte Seite, ist der Satz vorbei',
   carry1: 'Eine schwere Kurzhantel einseitig tragen, aufrecht bleiben, nicht zur Seite kippen',
   carry2: 'Schwere Kurzhantel einseitig tragen, aufrecht bleiben, nicht zur Seite kippen; schwerer als in Phase 1',
   liegestuetz: 'Hände auf Kurzhanteln, Brust tief zwischen die Hände, oben weiterdrücken; mehr als 12 Wdh.: Füße erhöht',
@@ -462,7 +531,7 @@ const WO = {
     e('2b', 'ruderBauch', 3, '10–12', { warm: 1, cue: CUE.ruder }),
     e('3a', 'dips', 2, '8–12', { name: 'Dips am Dip-Assistenten', cue: CUE.dips1 }),
     e('3b', 'curl', 2, '10–15', { from30: 3, cue: CUE.curl }),
-    e('4a', 'liegTriz', 2, '10–15', { from30: 3, cue: CUE.liegTriz }),
+    e('4a', 'trizDrueck', 2, '10–15', { from30: 3, cue: CUE.trizDrueck }),
     e('4b', 'carry', 4, '30', { side: true, cue: CUE.carry1 }),
     e('5a', 'seitheben', 2, '12–20', { from30: 3, cue: CUE.seitheben }),
     e('5b', 'nacken', 2, '15–25', { cue: CUE.nacken, note: 'Erste Woche ohne Scheibe' })
@@ -473,7 +542,7 @@ const WO = {
     e('2a', 'liegestuetz', 3, '8–12', { cue: CUE.liegestuetz }),
     e('2b', 'latzug', 2, '10–12', { cue: CUE.latzug }),
     e('3a', 'curl', 4, '10–15', { cue: CUE.curl }),
-    e('3b', 'liegTriz', 4, '10–15', { cue: CUE.liegTriz }),
+    e('3b', 'trizDrueck', 4, '10–15', { cue: CUE.trizDrueck }),
     e('4a', 'seitheben', 4, '12–20', { cue: CUE.seitheben }),
     e('4b', 'facepull', 3, '12–15', { cue: CUE.facepull }),
     e('5', 'handgelenk', 2, '15–20', { cue: CUE.handgelenk2 })
@@ -588,9 +657,9 @@ function range(reps) {
 }
 function mainKey(t) { return t === 'time' ? 's' : (t === 'carry' ? 'm' : 'r'); }
 function unitLabel(t, side) {
-  if (t === 'time') return side ? 's pro Seite' : 's';
-  if (t === 'carry') return 'm pro Seite';
-  return side ? 'pro Seite' : 'Wdh.';
+  if (t === 'time') return 's';
+  if (t === 'carry') return 'm';
+  return 'Wdh.';
 }
 function exName(item) { return item.name || EX[item.ex].n; }
 function el(tag, cls, text) {
@@ -630,12 +699,198 @@ const saving = {};
 const again = {};
 const dirty = {};
 
+const W_KEY = 'trainingsbuch.gewicht';
+const WT = (function () {
+  let x = null;
+  try { x = JSON.parse(localStorage.getItem(W_KEY) || 'null'); } catch (err) { x = null; }
+  x = x || {};
+  x.weights = x.weights || {};
+  /* Die alte Voreinstellung (abnehmen bis 11. Dez.) gilt nicht mehr: Standard ist Aufbauen */
+  if (!x.goalSet && x.goal && x.goal.mode === 'abnehmen' && x.goal.until === '2026-12-11') x.goal = null;
+  x.goal = x.goal || { mode: 'aufbauen', until: '' };
+  return x;
+})();
+function saveWT() { try { localStorage.setItem(W_KEY, JSON.stringify(WT)); } catch (err) { /* nichts */ } }
+const GOAL_NAME = { aufbauen: 'Aufbauen', halten: 'Halten', abnehmen: 'Leicht abnehmen' };
+const TARGET = { aufbauen: [0.2, 0.4], halten: [-0.15, 0.15], abnehmen: [-0.5, -0.25] };
+function addDays(d, n) { const x = parseDate(d); x.setDate(x.getDate() + n); return x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()); }
+function goalFor(d) {
+  const g = WT.goal;
+  if (g.mode !== 'aufbauen' && g.until && d > g.until) return 'aufbauen';
+  return g.mode;
+}
+function wPoints(end, days) {
+  const start = addDays(end, -(days - 1));
+  return Object.keys(WT.weights).filter(function (d) { return d >= start && d <= end; }).sort()
+    .map(function (d) { return { d: d, x: daysBetween(start, d), v: WT.weights[d] }; });
+}
+function wAvg(end, days) {
+  const p = wPoints(end, days);
+  return p.length ? p.reduce(function (a, q) { return a + q.v; }, 0) / p.length : null;
+}
+/* Trend der letzten 14 Tage per Ausgleichsgerade, in kg pro Woche */
+function wSlope(end) {
+  const p = wPoints(end, 14);
+  if (p.length < 8 || p[p.length - 1].x - p[0].x < 10) return null;
+  const n = p.length, mx = p.reduce(function (a, q) { return a + q.x; }, 0) / n, my = p.reduce(function (a, q) { return a + q.v; }, 0) / n;
+  let num2 = 0, den = 0;
+  p.forEach(function (q) { num2 += (q.x - mx) * (q.v - my); den += (q.x - mx) * (q.x - mx); });
+  return den ? (num2 / den) * 7 : null;
+}
+function fmtW(v) { return (Math.round(v * 10) / 10).toFixed(1).replace('.', ','); }
+function fmtKg(v, sign) { const t = fmtNum(Math.round(v * 10) / 10); return (sign && v > 0 ? '+' : '') + t; }
+function wAdvice(d) {
+  const goal = goalFor(d), sl = wSlope(d), tg = TARGET[goal];
+  const res = { goal: goal, slope: sl, head: '', text: '', state: 'wait' };
+  if (sl === null) {
+    const have = wPoints(d, 14).length;
+    res.head = 'Noch zu früh für eine Empfehlung';
+    res.text = 'Wieg dich weiter jeden Morgen. Ab etwa 10 Tagen mit mindestens 8 Messungen sage ich dir, ob du mehr oder weniger essen solltest. Bisher: ' + have + (have === 1 ? ' Messung' : ' Messungen') + ' in den letzten 14 Tagen.';
+    return res;
+  }
+  const tgTxt = goal === 'halten' ? 'etwa gleich bleiben' : (goal === 'aufbauen' ? '0,2–0,4 kg pro Woche zunehmen' : '0,25–0,5 kg pro Woche abnehmen');
+  const after = ' Ändere höchstens alle zwei Wochen etwas und schau dann wieder zwei Wochen, was passiert. 1 EL Öl sind etwa 90 kcal.';
+  if (goal === 'aufbauen') {
+    if (sl < tg[0]) { res.state = 'more'; res.head = 'Etwas mehr essen'; res.text = 'Du nimmst ' + fmtKg(sl, true) + ' kg pro Woche zu, Ziel sind 0,2–0,4 kg. Nimm 2–3 EL Öl mehr am Tag oder die größere Portion Linsen.' + after; }
+    else if (sl > 0.5) { res.state = 'less'; res.head = 'Etwas weniger essen'; res.text = 'Du nimmst ' + fmtKg(sl, true) + ' kg pro Woche zu, mehr als nötig. Ein großer Teil davon wäre Fett. Nimm 2 EL Öl weniger am Tag.' + after; }
+    else { res.state = 'ok'; res.head = 'Passt, weiter so'; res.text = 'Du nimmst ' + fmtKg(sl, true) + ' kg pro Woche zu. Ziel: ' + tgTxt + '.'; }
+  } else if (goal === 'abnehmen') {
+    if (sl > tg[1]) { res.state = 'less'; res.head = 'Etwas weniger essen'; res.text = (sl >= 0 ? 'Dein Gewicht steigt um ' + fmtKg(sl, true) + ' kg pro Woche' : 'Du nimmst nur ' + fmtKg(-sl) + ' kg pro Woche ab') + ', Ziel sind 0,25–0,5 kg. Nimm 2–3 EL Öl weniger am Tag, das Rapsöl bleibt.' + after; }
+    else if (sl < tg[0]) { res.state = 'more'; res.head = 'Etwas mehr essen'; res.text = 'Du nimmst ' + fmtKg(-sl) + ' kg pro Woche ab, schneller als geplant. Damit du keine Muskeln verlierst, nimm 1–2 EL Öl mehr am Tag.' + after; }
+    else { res.state = 'ok'; res.head = 'Passt, weiter so'; res.text = 'Du nimmst ' + fmtKg(-sl) + ' kg pro Woche ab. Ziel: ' + tgTxt + '.'; }
+  } else {
+    if (sl < tg[0]) { res.state = 'more'; res.head = 'Etwas mehr essen'; res.text = 'Du nimmst ' + fmtKg(-sl) + ' kg pro Woche ab. Nimm 1–2 EL Öl mehr am Tag.' + after; }
+    else if (sl > tg[1]) { res.state = 'less'; res.head = 'Etwas weniger essen'; res.text = 'Du nimmst ' + fmtKg(sl, true) + ' kg pro Woche zu. Nimm 1–2 EL Öl weniger am Tag.' + after; }
+    else { res.state = 'ok'; res.head = 'Passt, weiter so'; res.text = 'Dein Gewicht bleibt stabil.'; }
+  }
+  return res;
+}
+function weightChart(end) {
+  let days = 42, start = addDays(end, -(days - 1));
+  const pts = Object.keys(WT.weights).filter(function (d) { return d >= start && d <= end; }).sort();
+  if (pts.length < 2) return null;
+  if (pts[0] > start) { start = pts[0]; days = Math.max(7, daysBetween(start, end) + 1); }
+  const vals = pts.map(function (d) { return WT.weights[d]; });
+  const avg = [];
+  for (let i = 0; i < days; i++) {
+    const d = addDays(start, i), a = wAvg(d, 7), n = wPoints(d, 7).length;
+    if (a !== null && n >= 3 && d >= pts[0]) avg.push({ i: i, v: a });
+  }
+  let lo = Math.min.apply(null, vals.concat(avg.map(function (q) { return q.v; }))), hi = Math.max.apply(null, vals.concat(avg.map(function (q) { return q.v; })));
+  if (hi - lo < 1.5) { const m = (hi + lo) / 2; lo = m - 0.75; hi = m + 0.75; }
+  lo -= 0.2; hi += 0.2;
+  const W = 340, H = 150, L = 34, R = 8, T = 10, B = 22;
+  const X = function (i) { return L + (W - L - R) * i / (days - 1); };
+  const Y = function (v) { return T + (H - T - B) * (hi - v) / (hi - lo); };
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H); svg.setAttribute('class', 'wchart'); svg.setAttribute('role', 'img');
+  svg.setAttribute('aria-label', 'Gewichtsverlauf der letzten sechs Wochen');
+  const add = function (tag, attrs, text) { const n = document.createElementNS(ns, tag); Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); }); if (text) n.textContent = text; svg.appendChild(n); return n; };
+  [hi - 0.2, (hi + lo) / 2, lo + 0.2].forEach(function (v) {
+    add('line', { x1: L, x2: W - R, y1: Y(v), y2: Y(v), class: 'wgrid' });
+    add('text', { x: L - 4, y: Y(v) + 3, class: 'wlabel', 'text-anchor': 'end' }, fmtW(v));
+  });
+  add('text', { x: L, y: H - 6, class: 'wlabel' }, fmtDay(start).split(', ')[1]);
+  add('text', { x: W - R, y: H - 6, class: 'wlabel', 'text-anchor': 'end' }, fmtDay(end).split(', ')[1]);
+  if (avg.length > 1) add('polyline', { points: avg.map(function (q) { return X(q.i) + ',' + Y(q.v); }).join(' '), class: 'wavg' });
+  pts.forEach(function (d) { add('circle', { cx: X(daysBetween(start, d)), cy: Y(WT.weights[d]), r: 3.2, class: 'wdot' }); });
+  return svg;
+}
+function renderWeight(app) {
+  app.appendChild(el('h1', 'h-title', 'Gewicht'));
+  app.appendChild(statusEl());
+  const d = S.date;
+  // Eintragen
+  const entry = el('section', 'wbox');
+  entry.appendChild(el('h2', 'wh', 'Gewicht am ' + fmtDay(d)));
+  entry.appendChild(el('p', 'wsub', 'Morgens nach der Toilette, vor Essen und Trinken. Ein anderes Datum wählst du oben.'));
+  const row = el('div', 'wrow');
+  const fld = el('label', 'fld wfld');
+  const inp = el('input'); inp.type = 'text'; inp.inputMode = 'decimal'; inp.autocomplete = 'off';
+  inp.setAttribute('aria-label', 'Gewicht in kg');
+  const prevDates = Object.keys(WT.weights).filter(function (x) { return x < d; }).sort();
+  inp.placeholder = prevDates.length ? fmtW(WT.weights[prevDates[prevDates.length - 1]]) : '';
+  inp.value = WT.weights[d] !== undefined ? fmtW(WT.weights[d]) : '';
+  fld.appendChild(inp); fld.appendChild(el('span', '', 'kg'));
+  const save = el('button', 'f-done wsave', WT.weights[d] !== undefined ? 'Ändern' : 'Speichern'); save.type = 'button';
+  const doSave = function () {
+    const v = num(inp.value);
+    if (v === null || v < 30 || v > 250) { inp.focus(); setStatus('Bitte ein Gewicht in kg eintragen, zum Beispiel 88,4'); return; }
+    WT.weights[d] = Math.round(v * 10) / 10; saveWT();
+    setStatus('Gespeichert'); render();
+  };
+  save.addEventListener('click', doSave);
+  inp.addEventListener('keydown', function (ev) { if (ev.key === 'Enter') doSave(); });
+  row.appendChild(fld); row.appendChild(save);
+  entry.appendChild(row);
+  app.appendChild(entry);
+
+  // Auswertung
+  const adv = wAdvice(d);
+  const box = el('section', 'wbox wadv wadv-' + adv.state);
+  box.appendChild(el('p', 'wgoal', 'Ziel: ' + GOAL_NAME[adv.goal] + (adv.goal !== WT.goal.mode ? ' (seit ' + fmtDay(addDays(WT.goal.until, 1)) + ')' : (WT.goal.mode !== 'aufbauen' && WT.goal.until ? ' bis ' + fmtDay(WT.goal.until) + ', danach Aufbauen' : ''))));
+  box.appendChild(el('h2', 'wh', adv.head));
+  box.appendChild(el('p', '', adv.text));
+  const a7 = wAvg(d, 7), n7 = wPoints(d, 7).length;
+  const facts = el('p', 'wfacts');
+  facts.textContent = (a7 !== null ? 'Schnitt der letzten 7 Tage: ' + fmtW(a7) + ' kg (' + n7 + (n7 === 1 ? ' Messung' : ' Messungen') + ')' : 'Noch keine Messung in den letzten 7 Tagen');
+  const aNow = wAvg(d, 14), aPrev = wAvg(addDays(d, -14), 14);
+  if (aNow !== null && aPrev !== null && wPoints(d, 14).length >= 5 && wPoints(addDays(d, -14), 14).length >= 5) {
+    facts.textContent += '. Zwei-Wochen-Vergleich: ' + fmtKg(aNow - aPrev, true) + ' kg gegenüber den zwei Wochen davor';
+  }
+  box.appendChild(facts);
+  const chart = weightChart(d);
+  if (chart) { box.appendChild(chart); box.appendChild(el('p', 'wlegend', 'Punkte: einzelne Messungen. Linie: Schnitt der jeweils letzten 7 Tage.')); }
+  app.appendChild(box);
+
+  // Ziel einstellen
+  const gbox = el('section', 'wbox');
+  gbox.appendChild(el('h2', 'wh', 'Ziel'));
+  const seg = el('div', 'seg'); seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', 'Ziel');
+  ['aufbauen', 'halten', 'abnehmen'].forEach(function (m) {
+    const b = el('button', '', GOAL_NAME[m]); b.type = 'button';
+    b.setAttribute('aria-pressed', String(WT.goal.mode === m));
+    b.addEventListener('click', function () { WT.goal.mode = m; WT.goalSet = true; saveWT(); render(); });
+    seg.appendChild(b);
+  });
+  gbox.appendChild(seg);
+  if (WT.goal.mode !== 'aufbauen') {
+    const ul = el('label', 'wuntil', 'Bis einschließlich ');
+    const di = el('input'); di.type = 'date'; di.value = WT.goal.until || '';
+    di.addEventListener('change', function () { WT.goal.until = di.value || ''; WT.goalSet = true; saveWT(); render(); });
+    ul.appendChild(di);
+    gbox.appendChild(ul);
+    gbox.appendChild(el('p', 'wsub', 'Danach stellt das Trainingsbuch von selbst wieder auf Aufbauen um.'));
+  }
+  app.appendChild(gbox);
+
+  // Letzte Messungen
+  const all = Object.keys(WT.weights).sort().reverse().slice(0, 21);
+  if (all.length) {
+    const lbox = el('section', 'wbox');
+    lbox.appendChild(el('h2', 'wh', 'Letzte Messungen'));
+    const ul = el('ul', 'wlist');
+    all.forEach(function (x) {
+      const li = el('li');
+      li.appendChild(el('span', '', fmtDay(x)));
+      li.appendChild(el('b', '', fmtW(WT.weights[x]) + ' kg'));
+      const rm = el('button', 'linkish', '×'); rm.type = 'button'; rm.setAttribute('aria-label', 'Messung vom ' + fmtDay(x) + ' löschen');
+      rm.addEventListener('click', function () { delete WT.weights[x]; saveWT(); setStatus('Messung gelöscht'); render(); });
+      li.appendChild(rm);
+      ul.appendChild(li);
+    });
+    lbox.appendChild(ul);
+    app.appendChild(lbox);
+  }
+}
+
 const BACKUP_KEY = 'trainingsbuch.sicherung';
 function lastBackup() { try { return num(localStorage.getItem(BACKUP_KEY)); } catch (err) { return null; } }
 function countSessions() { return Object.keys(S.sessions).filter(function (id) { return hasLogged(S.sessions[id]); }).length; }
 function exportData() {
   const name = 'trainingsbuch-' + todayStr() + '.json';
-  const json = JSON.stringify({ app: 'trainingsbuch', version: 1, exported: new Date().toISOString(), sessions: S.sessions });
+  const json = JSON.stringify({ app: 'trainingsbuch', version: 2, exported: new Date().toISOString(), sessions: S.sessions, weights: WT.weights, weightGoal: WT.goal });
   const markDone = function () { try { localStorage.setItem(BACKUP_KEY, String(Date.now())); } catch (err) { /* nichts */ } setStatus('Sicherung gespeichert'); render(); };
   const download = function () {
     const url = URL.createObjectURL(new Blob([json], { type: 'application/json' }));
@@ -658,9 +913,16 @@ function importData(file) {
     try {
       const data = JSON.parse(reader.result);
       const sess = data && data.sessions;
-      if (!sess || typeof sess !== 'object') throw new Error('format');
-      let added = 0, updated = 0;
-      Object.keys(sess).forEach(function (id) {
+      const wts = data && data.weights;
+      if ((!sess || typeof sess !== 'object') && (!wts || typeof wts !== 'object')) throw new Error('format');
+      let added = 0, updated = 0, wAdded = 0;
+      Object.keys(wts || {}).forEach(function (k) {
+        const v = num(wts[k]);
+        if (/^\d{4}-\d{2}-\d{2}$/.test(k) && v !== null && WT.weights[k] === undefined) { WT.weights[k] = v; wAdded++; }
+      });
+      if (data.weightGoal && data.weightGoal.mode && !WT.goalSet) WT.goal = data.weightGoal;
+      saveWT();
+      Object.keys(sess || {}).forEach(function (id) {
         const x = sess[id];
         if (!x || !x.date || !x.w || !WO[x.w] || typeof x.ex !== 'object') return;
         const cur = S.sessions[id];
@@ -671,7 +933,7 @@ function importData(file) {
         if (S.mode === 'db') scheduleSave(id, 50);
       });
       lsSave();
-      setStatus('Sicherung geladen: ' + added + ' neue und ' + updated + ' aktualisierte Einheiten');
+      setStatus('Sicherung geladen: ' + added + ' neue und ' + updated + ' aktualisierte Einheiten' + (wAdded ? ', ' + wAdded + (wAdded === 1 ? ' Gewicht' : ' Gewichte') : ''));
     } catch (err) {
       setStatus('Diese Datei ist keine Sicherung aus dem Trainingsbuch.');
     }
@@ -699,13 +961,32 @@ function renderBackup(app) {
   box.appendChild(row);
   app.appendChild(box);
 }
+function storageWorks() {
+  try {
+    const k = 'trainingsbuch.test';
+    localStorage.setItem(k, '1');
+    const ok = localStorage.getItem(k) === '1';
+    localStorage.removeItem(k);
+    return ok;
+  } catch (err) { return false; }
+}
 function lsLoad() {
   try { const raw = localStorage.getItem(LS_KEY); return raw ? JSON.parse(raw) : {}; } catch (err) { return {}; }
 }
 function lsSave() {
   try { localStorage.setItem(LS_KEY, JSON.stringify(S.sessions)); } catch (err) { /* Speicher voll oder gesperrt */ }
 }
-function setStatus(t) { S.status = t; const n = document.getElementById('status'); if (n) n.textContent = t; }
+const ROUTINE_STATUS = ['Wird nur auf diesem Handy gespeichert', 'Wird nur auf diesem Gerät gespeichert', 'Auf diesem Gerät gespeichert', 'Gespeichert', 'Speichert …', 'Gespeichert in deinem Konto', 'Lädt deine Einheiten …'];
+let statusTimer = null;
+function setStatus(t) {
+  const problem = /Achtung|Konnte nicht|Speicher voll|Keine Verbindung|nicht erreichbar|nicht geladen|nicht mehr möglich|keine Sicherung/i.test(t);
+  S.status = ROUTINE_STATUS.indexOf(t) !== -1 ? '' : t;
+  clearTimeout(statusTimer);
+  if (S.status && !problem) statusTimer = setTimeout(function () { S.status = ''; const m = document.getElementById('status'); if (m) { m.textContent = ''; m.hidden = true; } }, 4000);
+  const n = document.getElementById('status');
+  if (n) { n.textContent = S.status; n.hidden = !S.status; }
+}
+function statusEl() { const st = el('p', 'status', S.status); st.id = 'status'; st.hidden = !S.status; return st; }
 
 function scheduleSave(id, delay) {
   dirty[id] = true;
@@ -750,7 +1031,8 @@ async function initStore() {
   if (!db || !uid) {
     try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {}); } catch (err) { /* nichts */ }
     S.mode = 'local'; S.loaded = true;
-    setStatus('Wird nur auf diesem Handy gespeichert');
+    S.noStorage = !storageWorks();
+    setStatus(S.noStorage ? 'Achtung: Hier wird nichts dauerhaft gespeichert' : 'Wird nur auf diesem Handy gespeichert');
     render();
     return;
   }
@@ -831,6 +1113,48 @@ function entriesFor(exId) {
   return out;
 }
 function lastEntry(exId) { const l = entriesFor(exId); return l.length ? l[0] : null; }
+/* Startgewicht für Übungen ohne eigene Werte: abgeleitet von einer verwandten Übung, bewusst eher leicht.
+   Der erste Satz zeigt dann, wo du stehst; mit „3+“ geht es schnell nach oben. */
+function refWeight(exId) {
+  const e = entriesFor(exId).find(function (x) { return !x.deload && x.w !== 'home'; });
+  if (!e) return null;
+  return entryWeight(e.data, EX[exId].t);
+}
+function bodyWeight() {
+  const ds = Object.keys(WT.weights).sort();
+  return ds.length ? WT.weights[ds[ds.length - 1]] : 88;
+}
+function startWeight(item) {
+  const id = item.ex;
+  const kh = function (v) { useListFor(id); return Math.max(1, khFloor(v)); };
+  const r1 = function (v) { return Math.round(v * 10) / 10; };
+  if (item.home) {
+    const H = { splitStuhl: [0, 'erst ohne Gewicht'], wadenStufe: [0, 'erst ohne Gewicht'], rdlEinbeinig: [2, '2 kg'], seitheben: [2, '2 kg'], nacken: [0, 'ohne Gewicht'] };
+    return H[id] ? { w: H[id][0], text: H[id][1] } : null;
+  }
+  let v;
+  switch (id) {
+    case 'trizDrueck': v = refWeight('trizKopf'); if (!v) return { w: 9.1, text: 'etwa 9 kg' }; v = Math.max(4.5, r1(v * 1.3)); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg, etwas mehr als beim Trizepsstrecken über Kopf' };
+    case 'hammer': v = refWeight('curl'); return v ? { w: kh(v), text: 'etwa ' + fmtNum(kh(v)) + ' kg, so viel wie beim Schrägbank-Curl' } : null;
+    case 'rudernEinarm': v = refWeight('ruderBauch'); return v ? { w: kh(v * 1.2), text: 'etwa ' + fmtNum(kh(v * 1.2)) + ' kg, etwas mehr als beim Rudern auf der Schrägbank' } : null;
+    case 'bulgarian': v = refWeight('goblet'); if (!v) return null; v = v * 0.25; return v < 2 ? { w: 0, text: 'erst ohne Gewicht' } : { w: kh(v), text: 'etwa ' + fmtNum(kh(v)) + ' kg pro Hand, ein Viertel deines Goblet-Squat-Gewichts' };
+    case 'kniebeuge': return { w: 20, text: 'mit der leeren Stange, 20 kg, damit die Technik sitzt' };
+    case 'beinpresse': v = refWeight('goblet'); if (!v) return null; v = Math.round(v * 2.5 / 5) * 5; return { w: v, text: 'etwa ' + fmtNum(v) + ' kg aufgelegt, das Zweieinhalbfache deines Goblet Squats' };
+    case 'facepull': v = refWeight('latzug'); if (!v) return null; v = r1(v * 0.5); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg, die Hälfte deines Latzugs' };
+    case 'pallof': v = refWeight('latzug'); if (!v) return null; v = r1(v * 0.4); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg, gut ein Drittel deines Latzugs' };
+    case 'fliegende': v = refWeight('bankKH'); if (!v) return { w: 4.5, text: 'etwa 4,5 kg pro Seite' }; v = Math.max(4.5, r1(v * 0.5)); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg pro Seite' };
+    case 'beinbeuger': v = refWeight('rdl'); v = Math.max(9.1, v ? r1(v * 2 * 0.8) : 13.6); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg' };
+    case 'klimmzug': {
+      const lat = refWeight('latzug'), dip = refWeight('dips'), bw = bodyWeight();
+      const a = lat ? bw - lat * 1.2 : null, b = dip !== null && dip !== undefined ? dip + 10 : null;
+      const cands = [a, b].filter(function (x) { return x !== null && !isNaN(x); });
+      if (!cands.length) return null;
+      v = Math.round(Math.max.apply(null, cands));
+      return { w: v, text: 'etwa ' + fmtNum(v) + ' kg Hilfe, geschätzt aus Latzug und Dips' };
+    }
+  }
+  return null;
+}
 function homeEntry(exId) { return entriesFor(exId).find(function (x) { return x.w === 'home'; }) || null; }
 function shownEntry(item) { return item.home ? homeEntry(item.ex) : refEntry(item.ex); }
 function refEntry(exId) {
@@ -895,6 +1219,31 @@ function learnedStep(exId, above) {
   }
   return best;
 }
+/* Gewichte in deinem Studio.
+   Kurzhanteln (paarweise): 1–10 kg in 1-kg-Schritten, 7,5 kg, 12,5–30 kg in 2,5er-Schritten, darüber in 2er-Schritten.
+   Kettlebells: 5, 6, 8, 10, 12, 15, 16, 20, 24 und 32 kg. Die kommen nur bei Übungen mit einem einzelnen Gewicht dazu. */
+function uniqSorted(a) { return a.filter(function (v, i) { return a.indexOf(v) === i; }).sort(function (x, y) { return x - y; }); }
+const DB_LIST = (function () {
+  const a = [7.5];
+  for (let v = 1; v <= 10; v++) a.push(v);
+  for (let v = 12.5; v <= 30; v += 2.5) a.push(v);
+  for (let v = 32; v <= 60; v += 2) a.push(v);
+  return uniqSorted(a);
+})();
+const KB_LIST = [5, 6, 8, 10, 12, 15, 16, 20, 24, 32];
+const SINGLE_WEIGHT = { goblet: true, carry: true };
+let KH_LIST = DB_LIST;
+function useListFor(exId) { KH_LIST = SINGLE_WEIGHT[exId] ? uniqSorted(DB_LIST.concat(KB_LIST)) : DB_LIST; }
+function isKbOnly(v) { return KB_LIST.indexOf(v) !== -1 && DB_LIST.indexOf(v) === -1; }
+function kgTxt(exId, v) { return fmtNum(v) + ' kg' + (SINGLE_WEIGHT[exId] && isKbOnly(v) ? ' (Kettlebell)' : ''); }
+function khNext(w) { const n = KH_LIST.find(function (v) { return v > w + 0.01; }); return n === undefined ? w + 2 : n; }
+function khPrev(w) { const l = KH_LIST.filter(function (v) { return v < w - 0.01; }); return l.length ? l[l.length - 1] : Math.max(0, w - 1); }
+function khNearest(x) {
+  let best = KH_LIST[0];
+  KH_LIST.forEach(function (v) { if (Math.abs(v - x) < Math.abs(best - x) - 1e-9) best = v; });
+  return best;
+}
+function khFloor(x) { const l = KH_LIST.filter(function (v) { return v <= x + 0.01; }); return l.length ? l[l.length - 1] : KH_LIST[0]; }
 function khStep(exId, w, dir) {
   if (dir > 0 ? w < 10 : w <= 10) return 1;
   return learnedStep(exId, 10) || 2;
@@ -914,14 +1263,11 @@ function lastTrainingDate() {
   return best;
 }
 function lighter(item, w) {
+  useListFor(item.ex);
   const ex = EX[item.ex], target = w * 0.9;
   if (ex.eq === 'lh') return Math.max(0, Math.floor(target / 2.5) * 2.5);
   if (ex.eq === 'scheibe') { const v = Math.floor(target / 1.25) * 1.25; return v < w * 0.75 ? w : v; }
-  if (ex.eq === 'kh') {
-    if (target < 10) return Math.max(1, Math.round(target));
-    const st = learnedStep(item.ex, 10) || 2;
-    return 10 + Math.floor((target - 10) / st) * st;
-  }
+  if (ex.eq === 'kh') return khFloor(target);
   const st = machineStep(item.ex);
   const n = Math.max(1, Math.round((w * 0.1) / st));
   return Math.max(0, Math.round((w - n * st) * 10) / 10);
@@ -929,6 +1275,7 @@ function lighter(item, w) {
 
 /* Vorschlag für heute */
 function suggestion(item) {
+  useListFor(item.ex);
   const ex = EX[item.ex], t = ex.t, rg = range(item.reps);
   const res = { text: '', w: null, reps: [] };
   const unitTxt = t === 'time' ? ' s' : (t === 'carry' ? ' m' : '');
@@ -940,6 +1287,8 @@ function suggestion(item) {
       res.text = 'Wie beim letzten Mal zu Hause, nicht mehr: ' + res.reps.map(fmtNum).join(' · ') + unitTxt;
     } else {
       const n = plannedSets(item, S.date);
+      const st = startWeight(item);
+      if (st) res.w = st.w;
       for (let i = 0; i < n; i++) res.reps.push(rg.lo);
       res.text = 'Ziel: ' + rg.lo + (unitTxt || ' Wdh.') + (item.side ? ' pro Seite' : '') + ' je Satz. Hör dort auf, auch wenn mehr ginge';
     }
@@ -960,6 +1309,8 @@ function suggestion(item) {
   }
   const last = refEntry(item.ex);
   if (!last) {
+    const st = startWeight(item);
+    if (st) { res.w = st.w; res.text = 'Erstes Mal, ' + st.text + '. Passt die untere Zahl nicht sauber, nimm weniger; war es leicht, mach mehr Wiederholungen und trag sie ein'; return res; }
     if (t === 'wr' || t === 'carry') res.text = item.ex === 'nacken' ? 'Erste Woche nur mit dem Kopfgewicht' : 'Starte mit einem Gewicht, bei dem du ' + rg.lo + ' sauber schaffst';
     else if (t === 'assist') res.text = 'Starte mit so viel Hilfe, dass du ' + rg.lo + ' sauber schaffst';
     return res;
@@ -1005,7 +1356,7 @@ function suggestion(item) {
   const planned = last.data.planned || sets.length;
   const allTop = sets.length >= planned && sets.every(function (x) { return num(x[k]) >= rg.hi; });
   if (t === 'time') {
-    res.text = allTop ? 'Obere Zeit erreicht. Bleib bei ' + rg.hi + ' s und halte die Form' : 'Etwas länger halten als letztes Mal';
+    res.text = allTop ? 'Obere Zeit geschafft. Nur wenn links das Schulterblatt die ganze Zeit am Brustkorb bleibt: Mach es schwerer statt länger, etwa mit leicht angehobenem oberem Bein, und halte wieder ' + rg.lo + '–' + rg.hi + ' s. Sonst bleib bei der Zeit, bis die Form links sauber ist' : 'Etwas länger halten als letztes Mal, solange die Form links sauber bleibt';
     return res;
   }
   if (t === 'reps') {
@@ -1017,7 +1368,9 @@ function suggestion(item) {
     return res;
   }
   if (t === 'carry') {
-    res.text = allTop ? 'Ganze Strecke geschafft: heute etwas schwerer, wenn du aufrecht geblieben bist' : 'Gleiches Gewicht, etwas weiter';
+    if (w !== null && w < 12) { res.next = 15; res.text = 'Für Rumpf und Griff ist das noch viel zu leicht. Nimm heute etwa 15 kg. Bleibst du damit nicht aufrecht oder kippst zur Seite, nimm 12 kg'; return res; }
+    if (allTop && w !== null) { res.next = khNext(w); res.text = 'Ganze Strecke geschafft: heute ' + kgTxt(item.ex, res.next) + ', wenn du aufrecht geblieben bist'; return res; }
+    res.text = 'Gleiches Gewicht, etwas weiter';
     return res;
   }
   if (!allTop) {
@@ -1030,6 +1383,15 @@ function suggestion(item) {
     return res;
   }
   res.up = true;
+  /* Überall 3+ Reserve: das war deutlich zu leicht, dann zwei Stufen auf einmal */
+  /* Deutlich zu leicht: in allen Sätzen 3 oder mehr über der oberen Zahl (früher auch per Reserve-Knopf „3+“) */
+  const overTop = sets.length > 0 && sets.every(function (x) { return num(x[k]) >= rg.hi + 3; });
+  const easy = overTop || (sets.length > 0 && sets.every(function (x) { return x.rir === 3; }));
+  const easyWhy = overTop ? 'Deutlich über der oberen Zahl' : 'Alle Sätze oben und überall 3+ übrig';
+  /* Zwei Stufen nur, wenn das zusammen höchstens 25 % mehr sind, sonst fällst du unter den Wiederholungsbereich */
+  const twoOk = function (two) { return easy && w > 0 && (two - w) / w <= 0.25; };
+  let steps = 1;
+  const leadFor = function (n) { return n === 2 ? easyWhy + ': heute zwei Stufen mehr, ' : (easy ? easyWhy + ': heute ' : 'Alle Sätze oben: heute '); };
   if (w === null && t !== 'assist') { res.text = 'Alle Sätze oben: heute etwas mehr Gewicht'; return res; }
   if (t === 'assist') {
     if (last.data.mode === 'zusatz') { res.text = 'Alle Sätze oben: heute 1–2 kg mehr Zusatzgewicht'; return res; }
@@ -1040,30 +1402,35 @@ function suggestion(item) {
     } else res.text = 'Alle Sätze oben: heute eine Stufe weniger Hilfe';
     return res;
   }
+  let smallStep = false;
   if (ex.eq === 'kh') {
-    const st = khStep(item.ex, w, 1);
-    res.next = w + st;
-    res.text = w < 10 ? 'Alle Sätze oben: heute ' + fmtNum(w + 1) + (w + 2 <= 10 ? '–' + fmtNum(w + 2) : '') + ' kg'
-                      : 'Alle Sätze oben: heute die nächstschwerere Hantel, etwa ' + fmtNum(w + st) + ' kg';
+    const one = khNext(w), two = khNext(one);
+    if (twoOk(two)) { res.next = two; steps = 2; } else res.next = one;
+    smallStep = res.next - w <= 1.01;
+    res.text = leadFor(steps) + kgTxt(item.ex, res.next);
   }
-  else if (ex.eq === 'lh') { res.next = w + 2.5; res.text = 'Alle Sätze oben: heute ' + fmtNum(w + 2.5) + ' kg'; }
+  else if (ex.eq === 'lh') {
+    if (twoOk(w + 5)) { res.next = w + 5; steps = 2; } else res.next = w + 2.5;
+    res.text = leadFor(steps) + fmtNum(res.next) + ' kg';
+  }
   else if (ex.eq === 'scheibe') {
     if (!w) { res.next = 1.25; res.text = 'Alle Sätze oben: heute mit Scheibe, 1,25–2,5 kg'; }
-    else { res.next = w + 1.25; res.text = 'Alle Sätze oben: heute ' + fmtNum(w + 1.25) + ' kg'; }
+    else { if (twoOk(w + 2.5)) { res.next = w + 2.5; steps = 2; } else res.next = w + 1.25; res.text = leadFor(steps) + fmtNum(res.next) + ' kg'; }
   } else {
     const st = machineStep(item.ex);
-    res.next = Math.round((w + st) * 100) / 100;
-    res.text = 'Alle Sätze oben: heute eine Stufe mehr, etwa ' + fmtNum(res.next) + ' kg. Ist sie zu groß, nimm ein Aufsteckgewicht';
+    if (twoOk(w + 2 * st)) { res.next = Math.round((w + 2 * st) * 100) / 100; steps = 2; } else res.next = Math.round((w + st) * 100) / 100;
+    res.text = leadFor(steps) + (steps === 2 ? '' : 'eine Stufe mehr, ') + 'etwa ' + fmtNum(res.next) + ' kg' + (st >= 4 && !easy ? '. Ist die Stufe zu groß, nimm ein Aufsteckgewicht' : '');
   }
-  /* Ist die nächste Stufe mehr als 20 % schwerer, erst 3 Wiederholungen über die obere Zahl gehen */
-  if (w > 0 && res.next && (res.next - w) / w > 0.2) {
+  /* Ist die nächste Stufe mehr als 20 % schwerer, erst 3 Wiederholungen über die obere Zahl gehen.
+     Nicht bei 3+ Reserve und nicht, wenn es schon der kleinste Hantelschritt von 1 kg ist */
+  if (!smallStep && w > 0 && res.next && (res.next - w) / w > 0.2) {
     const nextW = res.next, over = rg.hi + 3;
     const pct = Math.round((nextW - w) / w * 100);
     /* Eingetragene Reserve zählt mit: 15 Wiederholungen mit 3 Reserve entsprechen 18 */
     if (!sets.every(function (x) { return num(x[k]) + (typeof x.rir === 'number' ? x.rir : 0) >= over; })) {
       res.up = false; res.next = undefined;
-      res.text = 'Die nächste Stufe, ' + fmtNum(nextW) + ' kg, wäre ' + pct + ' % mehr. Bleib erst bei ' + fmtNum(w) + ' kg, bis du in allen Sätzen ' + over + ' Wiederholungen schaffst' +
-        ((ex.eq === 'maschine' || ex.eq === 'kabel') ? ', oder nimm ein Aufsteckgewicht' : '');
+      res.text = 'Die nächste Stufe, ' + fmtNum(nextW) + ' kg, wäre ' + pct + ' % mehr. Bleib erst bei ' + fmtNum(w) + ' kg, bis du in allen Sätzen ' + over + ' Wiederholungen schaffst. Mach dafür ruhig mehr als die obere Zahl, solange es sauber bleibt' +
+        ((ex.eq === 'maschine' || ex.eq === 'kabel') && machineStep(item.ex) >= 4 ? ', oder nimm ein Aufsteckgewicht' : '');
     } else {
       res.text = 'Bereit für den Sprung: heute ' + fmtNum(nextW) + ' kg, dann wieder ab ' + rg.lo + ' Wiederholungen';
     }
@@ -1072,10 +1439,11 @@ function suggestion(item) {
 }
 function warmText(item, sug) {
   if (!item.warm) return '';
+  useListFor(item.ex);
   const t = EX[item.ex].t;
   if (t === 'assist') return item.warm === 2 ? '+ 2 Aufwärmsätze mit mehr Hilfe: × 8 und × 4' : '+ 1 Aufwärmsatz mit mehr Hilfe: × 8';
   const base = sug.next || sug.w;
-  const r = function (x) { return fmtNum(Math.round(x * 2) / 2) + ' kg'; };
+  const r = function (x) { return EX[item.ex].eq === 'kh' ? kgTxt(item.ex, khNearest(x)) : (EX[item.ex].eq === 'lh' ? fmtNum(Math.round(x / 2.5) * 2.5) + ' kg' : 'etwa ' + fmtNum(Math.round(x * 2) / 2) + ' kg'); };
   if (!base) return item.warm === 2 ? '+ 2 Aufwärmsätze: 50 % × 8, 75 % × 4' : '+ 1 Aufwärmsatz: 50 % × 8';
   return item.warm === 2 ? '+ 2 Aufwärmsätze: ' + r(base * 0.5) + ' × 8, ' + r(base * 0.75) + ' × 4' : '+ 1 Aufwärmsatz: ' + r(base * 0.5) + ' × 8';
 }
@@ -1203,10 +1571,11 @@ function renderTop() {
 
 function render() {
   renderTop();
-  clearInterval(restLoop); clearInterval(correctLoop);
+  clearInterval(restLoop); clearInterval(correctLoop); clearInterval(holdLoop);
   const app = document.getElementById('app');
   app.textContent = '';
   if (S.view === 'verlauf') { releaseWake(); renderHistory(app); updateNext(); return; }
+  if (S.view === 'gewicht') { releaseWake(); renderWeight(app); updateNext(); return; }
   const ph = phaseOf(S.date);
   const homeOk = S.wid === 'home' && isDeload(S.date);
   if (!S.userPicked || !S.wid || (WO[S.wid].phase !== ph && !homeOk)) S.wid = chooseWorkout();
@@ -1228,7 +1597,7 @@ function renderFree(app, ph) {
   const head = el('div', 'wo-head');
   head.appendChild(el('h1', '', 'Heute ist frei'));
   head.appendChild(el('p', 'wo-meta', PHASE_NAME[ph]));
-  const st = el('p', 'status', S.status); st.id = 'status'; head.appendChild(st);
+  head.appendChild(statusEl());
   app.appendChild(head);
   const box = el('div', 'free');
   const key = DAY_WO[weekday(S.date)];
@@ -1257,31 +1626,32 @@ function renderFree(app, ph) {
 
 function renderWorkout(app) {
   const wo = WO[S.wid];
-  const head = el('div', 'wo-head');
-  head.appendChild(el('h1', '', wo.name));
-  const wd = weekday(S.date);
-  let meta = (wo.home ? 'Entlastungswoche zu Hause' : PHASE_NAME[wo.phase]) + ', ' + wo.time(S.date);
-  head.appendChild(el('p', 'wo-meta', meta));
-  const st = el('p', 'status', S.status); st.id = 'status'; head.appendChild(st);
-  const seg = el('div', 'seg'); seg.setAttribute('role', 'group'); seg.setAttribute('aria-label', 'Ansicht');
-  [['schritt', 'Schritt für Schritt'], ['liste', 'Liste']].forEach(function (m) {
-    const b = el('button', '', m[1]); b.type = 'button';
-    b.setAttribute('aria-pressed', String(S.ui === m[0]));
-    b.addEventListener('click', function () {
-      S.ui = m[0];
-      try { localStorage.setItem(UI_KEY, m[0]); } catch (err) { /* nichts */ }
-      S.didScroll = true;
-      render(); window.scrollTo(0, 0);
-    });
-    seg.appendChild(b);
+  const head = el('div', 'wo-head' + (S.ui === 'schritt' ? ' compact' : ''));
+  const titleRow = el('div', 'wo-title');
+  titleRow.appendChild(el('h1', '', wo.name));
+  const toList = S.ui === 'schritt';
+  const sw = el('button', 'view-switch'); sw.type = 'button';
+  sw.innerHTML = toList ? ICON_LIST : ICON_STEP;
+  sw.setAttribute('aria-label', toList ? 'Zur Listenansicht' : 'Zum Schritt-für-Schritt-Modus');
+  sw.title = toList ? 'Liste' : 'Schritt für Schritt';
+  sw.addEventListener('click', function () {
+    S.ui = toList ? 'liste' : 'schritt';
+    try { localStorage.setItem(UI_KEY, S.ui); } catch (err) { /* nichts */ }
+    S.didScroll = true;
+    render(); window.scrollTo(0, 0);
   });
-  head.appendChild(seg);
+  titleRow.appendChild(sw);
+  head.appendChild(titleRow);
+  const wd = weekday(S.date);
+  if (S.ui !== 'schritt') head.appendChild(el('p', 'wo-meta', (wo.home ? 'Entlastungswoche zu Hause' : PHASE_NAME[wo.phase]) + ', ' + wo.time(S.date)));
+  head.appendChild(statusEl());
   app.appendChild(head);
 
   const notes = [];
   if (isDeload(S.date)) notes.push(wo.home ? 'Die halbe Satzzahl ist schon eingerechnet, und die Ziele bei den Übungen sind bewusst niedrig. Hör dort auf, auch wenn mehr ginge. Zwei- bis dreimal in dieser Woche reicht, fällt etwas aus, ist das in Ordnung.' : 'Entlastungswoche: gleiche Übungen, halbe Satzzahl. Die Ziele liegen schon 2 Wiederholungen unter deinem letzten Mal.');
   if (wo.phase === 1 && PLAN_DAYS[1].indexOf(wd) === -1 && !hasLogged(getSession(false))) notes.push('Laut Plan ist heute ein freier Tag. Trainierst du trotzdem, ist das hier deine nächste Einheit.');
   if (S.date > PLAN_END) notes.push('Der Plan lief bis zum 1. Juni. Hier steht weiter Phase 3.');
+  if (S.noStorage) notes.push('Achtung: So geöffnet kann das Trainingsbuch nichts dauerhaft speichern. Was du einträgst, ist nach dem Schließen weg. Öffne die Datei auf einem anderen Weg.');
   if (S.mode === 'local' && countSessions() >= 3) {
     const lb = lastBackup();
     if (!lb || Date.now() - lb > 30 * 86400000) notes.push('Deine Einträge liegen nur auf diesem Handy. Zeit für eine Sicherung: unter „Verlauf“ ganz unten.');
@@ -1398,6 +1768,17 @@ function renderMode(item) {
   return box;
 }
 
+/* Was im Feld stehen soll: der vorige Satz derselben Einheit, sonst der Vorschlag */
+function defaultFor(item, i, sug, key) {
+  if (typeof i === 'number' && i > 0) {
+    const d = exData(item, false);
+    for (let j = i - 1; j >= 0; j--) {
+      const prev = d && d.sets[j];
+      if (prev && num(prev[key]) !== null) return fmtNum(num(prev[key]));
+    }
+  }
+  return placeholderFor(item, i, sug, key);
+}
 function placeholderFor(item, i, sug, key) {
   const t = EX[item.ex].t;
   if (key === 'w' && i === 'x') {
@@ -1415,7 +1796,8 @@ function placeholderFor(item, i, sug, key) {
   if (i === 'x') { const l = lastEntry(item.ex); return l && l.data.extra && num(l.data.extra.r) !== null ? fmtNum(num(l.data.extra.r)) : ''; }
   if (sug.up) return String(range(item.reps).lo);
   if (sug.reps && sug.reps[i] !== undefined && sug.reps[i] !== null) return fmtNum(sug.reps[i]);
-  return t === 'time' || t === 'carry' ? String(range(item.reps).lo) : '';
+  /* Ohne frühere Werte: die untere Zahl des Bereichs, so wie es der Plan für den Einstieg vorsieht */
+  return String(range(item.reps).lo);
 }
 
 function renderSet(item, i, sug, removable) {
@@ -1439,7 +1821,7 @@ function renderSet(item, i, sug, removable) {
     inp.type = 'text'; inp.inputMode = f.mode; inp.autocomplete = 'off';
     inp.enterKeyHint = 'done';
     inp.setAttribute('aria-label', (i === 'x' ? 'Extrasatz links' : 'Satz ' + (i + 1)) + ', ' + f.unit);
-    inp.placeholder = placeholderFor(item, i, sug, f.k);
+    inp.placeholder = defaultFor(item, i, sug, f.k);
     inp.value = cur && num(cur[f.k]) !== null ? fmtNum(num(cur[f.k])) : '';
     inp.addEventListener('input', function () { writeVal(item, i, f.k, inp.value); });
     inp.addEventListener('change', function () { flush(sid(S.date, S.wid)); });
@@ -1515,20 +1897,19 @@ function restoreTick() {
     }
   } catch (err) { /* nichts */ }
 }
-function resetFocus() { S.focusIdx = null; S.restUntil = null; S.lastTick = null; S.lastTickSlot = null; S.tickFor = null; S.restFrom = null; S.pausedNext = null; S.correcting = false; }
+function resetFocus() { S.showOpen = false; S.wrapNote = false; S.focusIdx = null; S.restUntil = null; S.lastTick = null; S.lastTickSlot = null; S.tickFor = null; S.restFrom = null; S.pausedNext = null; S.correcting = false; }
 
 /* Satz als erledigt markieren; false, wenn noch etwas fehlt */
 function markDone(item, i, inputs) {
   const t = EX[item.ex].t;
   const row = rowFor(item, i);
   const mk = i === 'x' ? 'r' : mainKey(t);
-  if (num(inputs[mk].value) === null) {
-    if ((t === 'time' || t === 'carry') && i !== 'x' && inputs[mk].placeholder) { inputs[mk].value = inputs[mk].placeholder; row[mk] = num(inputs[mk].placeholder); }
-    if (num(inputs[mk].value) === null) { inputs[mk].focus(); return false; }
-  }
-  if (inputs.w && num(inputs.w.value) === null && inputs.w.placeholder) {
-    inputs.w.value = inputs.w.placeholder; row.w = num(inputs.w.placeholder);
-  }
+  Object.keys(inputs).forEach(function (k) {
+    if (num(inputs[k].value) === null && num(inputs[k].placeholder) !== null) inputs[k].value = inputs[k].placeholder;
+    const v = num(inputs[k].value);
+    if (v !== null) row[k] = v;
+  });
+  if (num(inputs[mk].value) === null) { inputs[mk].focus(); return false; }
   row.d = true;
   S.lastTick = Date.now();
   S.lastTickSlot = { ex: item.ex, i: i, g: item.k.replace(/[a-z]/g, '') };
@@ -1545,7 +1926,7 @@ function toggleDone(item, i, inputs, btn) {
 /* ------------------------------------------------------------------ */
 /* Schritt für Schritt                                                 */
 /* ------------------------------------------------------------------ */
-let restLoop = null, correctLoop = null, wake = null;
+let restLoop = null, correctLoop = null, holdLoop = null, wake = null;
 function grp(item) { return item.k.replace(/[a-z]/g, ''); }
 function nextIndex(order, from) {
   for (let k = from + 1; k < order.length; k++) if (!slotDone(order[k])) return k;
@@ -1559,7 +1940,7 @@ function currentIndex(order) {
 function restPlan(prev, next) {
   if (next.i === 'x') return { sec: 90, why: 'Kurz durchatmen, dann der Extrasatz links mit etwa halbem Gewicht' };
   if (prev.item.ex === next.item.ex) return { sec: 150, why: '2–3 Minuten bis zum nächsten Satz derselben Übung' };
-  if (grp(prev.item) === grp(next.item)) return { sec: 75, why: 'Gut eine Minute, dann im Wechsel weiter' };
+  if (grp(prev.item) === grp(next.item)) return { sec: 60, why: 'Eine Minute, dann im Wechsel weiter' };
   return { sec: 60, why: 'Neuer Block: Zeit, die nächste Station einzurichten' };
 }
 function setLabelOf(order, slot) {
@@ -1627,8 +2008,11 @@ function startRestLoop() {
     if (!S.restUntil) { clearInterval(restLoop); return; }
     if (Date.now() >= S.restUntil) {
       const late = Date.now() - S.restUntil;
-      S.restUntil = null; saveTick(); clearInterval(restLoop);
-      if (late < 5000 && document.visibilityState === 'visible') alertEnd();
+      const typing = document.activeElement && document.activeElement.classList && document.activeElement.classList.contains('rest-note');
+      if (!S.restBeeped && late < 5000 && document.visibilityState === 'visible') alertEnd();
+      S.restBeeped = true;
+      if (typing) { drawRest(); return; } /* erst weiter, wenn du mit der Notiz fertig bist */
+      S.restUntil = null; S.restBeeped = false; saveTick(); clearInterval(restLoop);
       render(); window.scrollTo(0, 0);
       return;
     }
@@ -1650,7 +2034,8 @@ function renderFocus(app, wo) {
   const wrap = el('section', 'focus');
   wrap.setAttribute('aria-label', 'Schritt für Schritt');
   const pr = el('div', 'f-progress');
-  pr.appendChild(el('span', '', doneCount + ' von ' + total + ' Sätzen erledigt'));
+  const prLine = el('span', 'f-prline', doneCount + ' von ' + total + ' Sätzen erledigt');
+  pr.appendChild(prLine);
   const bar = el('div', 'f-bar'); const fill = el('i');
   fill.style.width = (total ? Math.round(doneCount / total * 100) : 0) + '%';
   bar.appendChild(fill); pr.appendChild(bar); wrap.appendChild(pr);
@@ -1659,10 +2044,19 @@ function renderFocus(app, wo) {
   if (!S.correcting && S.restUntil && S.restUntil > Date.now()) { renderRest(wrap, order); startRestLoop(); return; }
   if (!S.correcting && S.restUntil) { S.restUntil = null; saveTick(); }
 
+  if (S.showOpen) { renderOpen(wrap, order); return; }
   const idx = currentIndex(order);
   if (idx === -1) { renderFocusDone(wrap, total); return; }
   S.focusIdx = idx;
   const slot = order[idx], item = slot.item, ex = EX[item.ex], t = ex.t;
+  const skipped = order.filter(function (x, n) { return n < idx && !slotDone(x); }).length;
+  if (skipped) {
+    const so = el('button', 'linkish f-open', skipped + (skipped === 1 ? ' Satz übersprungen' : ' Sätze übersprungen') + ', ansehen');
+    so.type = 'button';
+    so.addEventListener('click', function () { S.showOpen = true; render(); window.scrollTo(0, 0); });
+    prLine.appendChild(document.createTextNode(' '));
+    prLine.appendChild(so);
+  }
   const sug = suggestion(item);
   const card = el('article', 'f-card');
 
@@ -1670,17 +2064,33 @@ function renderFocus(app, wo) {
   where.appendChild(el('span', 'f-num', item.k));
   const sl = el('span', 'f-set');
   sl.appendChild(el('b', '', setLabelOf(order, slot)));
-  if (slotDone(slot)) sl.appendChild(document.createTextNode(', schon erledigt'));
+  if (slotDone(slot)) sl.appendChild(document.createTextNode(', erledigt'));
   where.appendChild(sl);
+  const goTo = function (n) {
+    clearInterval(correctLoop);
+    S.correcting = false; S.pausedNext = null; S.restUntil = null; S.wrapNote = false;
+    if (n >= total) { if (order.some(function (x) { return !slotDone(x); })) S.showOpen = true; else S.focusIdx = null; }
+    else S.focusIdx = Math.max(0, n);
+    saveTick(); render(); window.scrollTo(0, 0);
+  };
+  const arrows = el('div', 'f-arrows');
+  const prevB = el('button', 'f-arrow', '‹'); prevB.type = 'button'; prevB.setAttribute('aria-label', 'Vorheriger Satz');
+  prevB.disabled = idx === 0;
+  prevB.addEventListener('click', function () { goTo(idx - 1); });
+  const nextB = el('button', 'f-arrow', '›'); nextB.type = 'button';
+  nextB.setAttribute('aria-label', idx === total - 1 ? 'Zur Übersicht' : 'Nächster Satz');
+  nextB.addEventListener('click', function () { goTo(idx + 1); });
+  arrows.appendChild(prevB); arrows.appendChild(nextB);
+  where.appendChild(arrows);
   card.appendChild(where);
+  if (S.wrapNote && !slotDone(slot)) card.appendChild(el('p', 'f-wrapnote', 'Diesen Satz hattest du übersprungen.'));
+  S.wrapNote = false;
   const mates = wo.list.filter(function (x) { return grp(x) === grp(item) && x !== item; });
-  if (mates.length) card.appendChild(el('p', 'f-partner', 'Im Wechsel mit ' + mates.map(function (x) { return x.k + ' ' + exName(x); }).join(', ')));
 
   const h2 = el('h2');
   const a = ex.u ? el('a', '', exName(item)) : el('span', '', exName(item));
   if (ex.u) { a.href = ex.u; a.target = '_blank'; a.rel = 'noopener'; }
   h2.appendChild(a); card.appendChild(h2);
-  card.appendChild(el('p', 'muscles', ex.m));
 
   if (slot.i === 0 && item.warm) {
     const w = el('div', 'f-warm');
@@ -1698,15 +2108,15 @@ function renderFocus(app, wo) {
   card.appendChild(tg);
 
   const last = shownEntry(item);
-  if (last) {
-    const l = el('p', 'last');
-    l.appendChild(document.createTextNode('Letztes Mal, ' + fmtDay(last.date) + ': '));
-    const wtx = weightText(last.data, t);
-    l.appendChild(el('b', '', (wtx ? wtx + ', ' : '') + setsText(last.data, t, item.side)));
-    if (last.data.pain) l.appendChild(document.createTextNode(' (hat gezwickt)'));
-    card.appendChild(l);
+  if ((sug.text && slot.i !== 'x') || last) {
+    const h = el('p', 'f-hint');
+    if (sug.text && slot.i !== 'x') h.appendChild(el('b', '', sug.text + '. '));
+    if (last) {
+      const wtx = weightText(last.data, t);
+      h.appendChild(el('span', 'f-last', 'Zuletzt: ' + (wtx ? wtx + ', ' : '') + setsText(last.data, t, item.side) + (last.data.pain ? ' (hat gezwickt)' : '')));
+    }
+    card.appendChild(h);
   }
-  if (sug.text && slot.i !== 'x') card.appendChild(el('p', 'hint', sug.text));
   const stall = (sug.comeback || sug.pain) ? null : stallInfo(item);
   if (stall && last && slot.i !== 'x') card.appendChild(el('p', 'stall', 'Seit ' + stall + ' Einheiten kein Fortschritt. Senk das Gewicht um etwa 10 % und arbeite dich neu hoch.'));
   if (t === 'assist' && slot.i !== 'x') card.appendChild(renderMode(item));
@@ -1727,16 +2137,17 @@ function renderFocus(app, wo) {
     const stepRow = el('div', 'f-step');
     const minus = el('button', 'f-pm', '−'); minus.type = 'button'; minus.setAttribute('aria-label', f.unit + ' weniger');
     const inp = el('input', 'f-input'); inp.id = id; inp.type = 'text'; inp.inputMode = f.mode; inp.autocomplete = 'off'; inp.enterKeyHint = 'done';
-    inp.placeholder = placeholderFor(item, slot.i, sug, f.k);
-    inp.value = cur && num(cur[f.k]) !== null ? fmtNum(num(cur[f.k])) : '';
+    inp.placeholder = defaultFor(item, slot.i, sug, f.k);
+    inp.value = cur && num(cur[f.k]) !== null ? fmtNum(num(cur[f.k])) : inp.placeholder;
     inp.addEventListener('input', function () { writeVal(item, slot.i, f.k, inp.value); });
     inp.addEventListener('change', function () { flush(sid(S.date, S.wid)); });
     const plus = el('button', 'f-pm', '+'); plus.type = 'button'; plus.setAttribute('aria-label', f.unit + ' mehr');
     [[minus, -1], [plus, 1]].forEach(function (pair) {
       pair[0].addEventListener('click', function () {
         const base = num(inp.value) !== null ? num(inp.value) : (num(inp.placeholder) !== null ? num(inp.placeholder) : 0);
-        const step = stepFor(item, f.k, base, pair[1]);
-        const v = Math.max(0, Math.round((base + pair[1] * step) * 100) / 100);
+        let v;
+        if (f.k === 'w' && EX[item.ex].eq === 'kh') { useListFor(item.ex); v = pair[1] > 0 ? khNext(base) : khPrev(base); }
+        else { const step = stepFor(item, f.k, base, pair[1]); v = Math.max(0, Math.round((base + pair[1] * step) * 100) / 100); }
         inp.value = fmtNum(v); writeVal(item, slot.i, f.k, inp.value);
       });
     });
@@ -1746,24 +2157,40 @@ function renderFocus(app, wo) {
     inputs[f.k] = inp;
   });
   card.appendChild(box);
-  if (ex.comp && slot.i !== 'x') {
-    const rr = el('div', 'rir');
-    rr.appendChild(el('p', '', 'Wie viele wären noch gegangen? Freiwillig'));
-    const rb = el('div', 'rir-btns'); rb.setAttribute('role', 'group'); rb.setAttribute('aria-label', 'Reserve');
-    const curR = cur && typeof cur.rir === 'number' ? cur.rir : null;
-    [[0, '0'], [1, '1'], [2, '2'], [3, '3+']].forEach(function (o) {
-      const b = el('button', '', o[1]); b.type = 'button';
-      b.setAttribute('aria-pressed', String(curR === o[0]));
-      b.addEventListener('click', function () {
-        const row = rowFor(item, slot.i);
-        if (row.rir === o[0]) delete row.rir; else row.rir = o[0];
-        touch(400);
-        rb.querySelectorAll('button').forEach(function (x, n) { x.setAttribute('aria-pressed', String(row.rir === [0, 1, 2, 3][n])); });
-      });
-      rb.appendChild(b);
+  if (t === 'time' && slot.i !== 'x') {
+    const hb = el('div', 'hold');
+    const lab = el('p', 'hold-lab', 'Timer für beide Seiten: erst links, dann direkt rechts');
+    const disp = el('div', 'hold-time'); disp.setAttribute('aria-live', 'polite');
+    const btn = el('button', 'hold-btn', 'Timer starten'); btn.type = 'button';
+    hb.appendChild(lab); hb.appendChild(disp); hb.appendChild(btn);
+    btn.addEventListener('click', function () {
+      if (holdLoop) { clearInterval(holdLoop); holdLoop = null; disp.textContent = ''; lab.textContent = 'Abgebrochen'; btn.textContent = 'Timer starten'; return; }
+      primeAudio();
+      const target = num(inputs.s.value) || num(inputs.s.placeholder) || range(item.reps).lo;
+      const phases = [{ n: 'Links', sec: target }, { n: 'Seite wechseln', sec: 5 }, { n: 'Rechts', sec: target }];
+      let pi = 0, end = Date.now() + phases[0].sec * 1000;
+      btn.textContent = 'Abbrechen';
+      const tick = function () {
+        const left = end - Date.now();
+        if (left <= 0) {
+          if (phases[pi].n !== 'Seite wechseln') alertEnd();
+          pi++;
+          if (pi >= phases.length) {
+            clearInterval(holdLoop); holdLoop = null;
+            if (num(inputs.s.value) === null) { inputs.s.value = fmtNum(target); }
+            writeVal(item, slot.i, 's', inputs.s.value);
+            lab.textContent = 'Geschafft. Tipp auf „Satz erledigt“.'; disp.textContent = ''; btn.textContent = 'Nochmal starten';
+            return;
+          }
+          end = Date.now() + phases[pi].sec * 1000;
+        }
+        lab.textContent = phases[pi].n;
+        disp.textContent = fmtClock(Math.max(0, end - Date.now()));
+      };
+      tick();
+      holdLoop = setInterval(tick, 200);
     });
-    rr.appendChild(rb);
-    card.appendChild(rr);
+    card.appendChild(hb);
   }
 
   const backFromRest = S.correcting && S.restFrom === idx && slotDone(slot);
@@ -1801,40 +2228,39 @@ function renderFocus(app, wo) {
     order = slotOrder(wo);
     const ni = nextIndex(order, idx);
     if (ni === -1) { S.focusIdx = null; S.restUntil = null; saveTick(); render(); window.scrollTo(0, 0); return; }
+    S.wrapNote = ni < idx;
     S.focusIdx = ni;
     if (!wasDone) {
       const plan = restPlan(slot, order[ni]);
       S.restFrom = idx;
-      S.restUntil = Date.now() + plan.sec * 1000; S.restTotal = plan.sec; S.restReason = plan.why;
+      S.restUntil = Date.now() + plan.sec * 1000; S.restTotal = plan.sec; S.restReason = plan.why; S.restBeeped = false;
     }
     saveTick();
     render(); window.scrollTo(0, 0);
   });
   card.appendChild(doneBtn);
+  let undoBtn = null;
   if (slotDone(slot)) {
-    const undo = el('button', 'linkish', 'Satz rückgängig machen'); undo.type = 'button';
-    undo.style.display = 'block'; undo.style.margin = '10px auto 0';
-    undo.addEventListener('click', function () {
+    undoBtn = el('button', 'f-icon'); undoBtn.type = 'button'; undoBtn.innerHTML = ICON_UNDO;
+    undoBtn.setAttribute('aria-label', 'Satz rückgängig machen'); undoBtn.title = 'Satz rückgängig machen';
+    undoBtn.addEventListener('click', function () {
       const dd = exData(item, true);
       if (slot.i === 'x') dd.extra = {}; else dd.sets[slot.i] = {};
       clearInterval(correctLoop); S.correcting = false; S.pausedNext = null; S.restUntil = null; S.lastTick = null; S.lastTickSlot = null;
       touch(200); saveTick(); render(); window.scrollTo(0, 0);
     });
-    card.appendChild(undo);
   }
 
-  const nav = el('div', 'f-nav');
-  const back = el('button', 'linkish', 'Zurück'); back.type = 'button';
-  back.disabled = idx === 0; if (idx === 0) back.style.visibility = 'hidden';
-  back.addEventListener('click', function () { S.focusIdx = Math.max(0, idx - 1); S.correcting = false; S.pausedNext = null; S.restUntil = null; saveTick(); render(); window.scrollTo(0, 0); });
-  const skip = el('button', 'linkish', 'Überspringen, später machen'); skip.type = 'button';
-  skip.addEventListener('click', function () { S.focusIdx = (idx + 1) % total; S.correcting = false; S.pausedNext = null; S.restUntil = null; saveTick(); render(); window.scrollTo(0, 0); });
-  nav.appendChild(back); nav.appendChild(skip);
-  card.appendChild(nav);
-  const pr2 = el('div', 'f-pain'); pr2.appendChild(painButton(item)); card.appendChild(pr2);
-  const cue = el('p', 'f-cue'); cue.appendChild(el('b', '', 'Worauf achten: ')); cue.appendChild(document.createTextNode(item.cue));
-  card.appendChild(cue);
-  card.appendChild(renderMore(item, t));
+  if (slot.i === 0) {
+    const cue = el('p', 'f-cue'); cue.appendChild(el('b', '', 'Worauf achten: ')); cue.appendChild(document.createTextNode(item.cue));
+    card.appendChild(cue);
+  } else {
+    const det = el('details', 'f-cuedet');
+    det.appendChild(el('summary', '', 'Worauf achten'));
+    det.appendChild(el('p', 'f-cue', item.cue));
+    card.appendChild(det);
+  }
+  card.appendChild(renderNotes(item, t, undoBtn));
   wrap.appendChild(card);
 }
 
@@ -1854,6 +2280,7 @@ function renderRest(wrap, order) {
       const wtxt = num(row.w) !== null ? fmtNum(num(row.w)) + ' kg' + (t === 'assist' && pd.mode !== 'zusatz' && prev.i !== 'x' ? ' Hilfe' : '') + ', ' : '';
       const rirTxt = typeof row.rir === 'number' ? ', Reserve ' + (row.rir === 3 ? '3+' : row.rir) : '';
       box.appendChild(el('p', 'rest-logged', 'Eingetragen: ' + prev.item.k + ' ' + exName(prev.item) + ', ' + setLabelOf(order, prev) + ': ' + wtxt + fmtNum(num(row[k])) + unit + rirTxt));
+      box.appendChild(noteArea(prev.item, 'f-note rest-note'));
     }
   }
   const btns = el('div', 'rest-btns');
@@ -1890,6 +2317,29 @@ function renderRest(wrap, order) {
   drawRest();
 }
 
+function renderOpen(wrap, order) {
+  const open = order.map(function (x, n) { return { x: x, n: n }; }).filter(function (o) { return !slotDone(o.x); });
+  if (!open.length) { S.showOpen = false; renderFocusDone(wrap, order.length); return; }
+  const c = el('div', 'f-donecard');
+  c.appendChild(el('h2', '', open.length === 1 ? 'Ein Satz ist noch offen' : open.length + ' Sätze sind noch offen'));
+  c.appendChild(el('p', '', 'Tipp auf einen, um ihn jetzt zu machen.'));
+  const ul = el('div', 'f-openlist');
+  open.forEach(function (o) {
+    const b = el('button', 'f-openitem'); b.type = 'button';
+    b.appendChild(el('b', '', o.x.item.k + ' ' + exName(o.x.item)));
+    b.appendChild(el('span', '', setLabelOf(order, o.x)));
+    b.addEventListener('click', function () { S.showOpen = false; S.focusIdx = o.n; saveTick(); render(); window.scrollTo(0, 0); });
+    ul.appendChild(b);
+  });
+  c.appendChild(ul);
+  const back = el('button', 'linkish', 'Zurück zum letzten Satz'); back.type = 'button';
+  back.addEventListener('click', function () { S.showOpen = false; S.focusIdx = order.length - 1; render(); window.scrollTo(0, 0); });
+  c.appendChild(back);
+  const leave = el('button', 'linkish', 'Für heute so lassen'); leave.type = 'button'; leave.style.marginLeft = '16px';
+  leave.addEventListener('click', function () { S.showOpen = false; S.ui = 'liste'; try { localStorage.setItem(UI_KEY, 'liste'); } catch (err) { /* nichts */ } render(); window.scrollTo(0, 0); });
+  c.appendChild(leave);
+  wrap.appendChild(c);
+}
 function renderFocusDone(wrap, total) {
   releaseWake();
   const c = el('div', 'f-donecard');
@@ -1901,6 +2351,64 @@ function renderFocusDone(wrap, total) {
   wrap.appendChild(c);
 }
 
+const ICON_LIST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1" fill="currentColor"/><circle cx="4.5" cy="12" r="1" fill="currentColor"/><circle cx="4.5" cy="18" r="1" fill="currentColor"/></svg>';
+const ICON_STEP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M10 9l3 3-3 3"/></svg>';
+const ICON_UNDO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>';
+const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 7v5l3 2"/></svg>';
+/* Notiz direkt beschreibbar, darunter ⚡ für „Hat gezwickt“ und ein Symbol für den Verlauf */
+function noteArea(item, cls) {
+  const d = exData(item, false);
+  const ta = el('textarea', cls);
+  ta.rows = 2;
+  ta.placeholder = 'Notiz zu ' + exName(item);
+  ta.setAttribute('aria-label', 'Notiz zu ' + exName(item));
+  ta.value = d && d.note ? d.note : '';
+  const grow = function () { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight + 2, 240) + 'px'; };
+  ta.addEventListener('input', function () { const dd = exData(item, true); dd.note = ta.value; touch(1500); grow(); });
+  ta.addEventListener('change', function () { flush(sid(S.date, S.wid)); });
+  setTimeout(grow, 0);
+  return ta;
+}
+function renderNotes(item, t, undoBtn) {
+  const box = el('div', 'f-notes');
+  const prev = shownEntry(item);
+  if (prev && prev.data.note) {
+    const ln = el('p', 'f-lastnote', 'Notiz vom ' + fmtDay(prev.date) + ': ' + prev.data.note);
+    ln.title = 'Antippen zum Aufklappen';
+    ln.addEventListener('click', function () { ln.classList.toggle('open'); });
+    box.appendChild(ln);
+  }
+  box.appendChild(noteArea(item, 'f-note'));
+  const icons = el('div', 'f-icons');
+  const d = exData(item, false);
+  const pain = el('button', 'f-icon f-icon-pain', '⚡'); pain.type = 'button';
+  const setPain = function (on) { pain.setAttribute('aria-pressed', String(on)); pain.setAttribute('aria-label', on ? 'Hat gezwickt, markiert' : 'Hat gezwickt markieren'); pain.title = on ? 'Hat gezwickt (markiert)' : 'Hat gezwickt'; };
+  setPain(!!(d && d.pain));
+  pain.addEventListener('click', function () { const dd = exData(item, true); dd.pain = !dd.pain; touch(200); setPain(dd.pain); });
+  const hist = el('button', 'f-icon'); hist.type = 'button'; hist.innerHTML = ICON_CLOCK;
+  hist.setAttribute('aria-label', 'Verlauf dieser Übung'); hist.title = 'Verlauf'; hist.setAttribute('aria-expanded', 'false');
+  const panel = el('div', 'f-hist'); panel.hidden = true;
+  const list = entriesFor(item.ex).slice(0, 8);
+  if (list.length) {
+    const ul = el('ul', 'hist');
+    list.forEach(function (x) {
+      const li = el('li');
+      li.appendChild(document.createTextNode(fmtDay(x.date) + (x.deload ? ' (Entlastung)' : '') + ': '));
+      const wtx = weightText(x.data, t);
+      li.appendChild(el('b', '', (wtx ? wtx + ', ' : '') + setsText(x.data, t, item.side)));
+      if (x.data.pain) li.appendChild(document.createTextNode(' (gezwickt)'));
+      if (x.data.note) li.appendChild(el('span', 'hist-note', x.data.note));
+      ul.appendChild(li);
+    });
+    panel.appendChild(ul);
+  } else panel.appendChild(el('p', 'lastnote', 'Noch keine früheren Einträge.'));
+  hist.addEventListener('click', function () { panel.hidden = !panel.hidden; hist.setAttribute('aria-expanded', String(!panel.hidden)); });
+  icons.appendChild(pain); icons.appendChild(hist);
+  if (undoBtn) icons.appendChild(undoBtn);
+  box.appendChild(icons);
+  box.appendChild(panel);
+  return box;
+}
 function painButton(item) {
   const d = exData(item, false);
   const on = !!(d && d.pain);
@@ -1990,8 +2498,7 @@ function updateNext() {
     if (sec > MAX_PAUSE_SEC) { timer.textContent = ''; S.lastTick = null; S.lastTickSlot = null; clearInterval(tickTimer); return; }
     timer.textContent = Math.floor(sec / 60) + ':' + pad(sec % 60);
   };
-  draw();
-  if (S.lastTick) tickTimer = setInterval(draw, 1000);
+  timer.textContent = '';
 }
 document.getElementById('nextBtn').addEventListener('click', function () {
   if (!S.nextSlot) return;
@@ -2002,7 +2509,7 @@ document.getElementById('nextBtn').addEventListener('click', function () {
 /* Verlauf */
 function renderHistory(app) {
   app.appendChild(el('h1', 'h-title', 'Verlauf'));
-  const st = el('p', 'status', S.status); st.id = 'status'; app.appendChild(st);
+  app.appendChild(statusEl());
   const list = Object.keys(S.sessions).map(function (id) { return Object.assign({ id: id }, S.sessions[id]); })
     .filter(function (s) {
       return s && s.w && WO[s.w] && Object.keys(s.ex || {}).some(function (k) { return EX[k] && loggedSets(s.ex[k], EX[k].t).length; });
@@ -2041,6 +2548,17 @@ function renderHistory(app) {
       body.appendChild(p);
       if (data.note) body.appendChild(el('p', '', 'Notiz: ' + data.note));
     });
+    Object.keys(s.ex || {}).forEach(function (k) {
+      if (!EX[k] || WO[s.w].list.some(function (it) { return it.ex === k; })) return;
+      const data = s.ex[k];
+      if (!loggedSets(data, EX[k].t).length) return;
+      const p = el('p');
+      p.appendChild(document.createTextNode(EX[k].n + ' (nicht mehr im Plan): '));
+      const wtx = weightText(data, EX[k].t);
+      p.appendChild(el('b', '', (wtx ? wtx + ', ' : '') + setsText(data, EX[k].t, false)));
+      body.appendChild(p);
+      if (data.note) body.appendChild(el('p', '', 'Notiz: ' + data.note));
+    });
     const open = el('button', 'linkish', 'Einheit öffnen');
     open.type = 'button';
     open.addEventListener('click', function () {
@@ -2058,12 +2576,12 @@ function renderHistory(app) {
 function setHash(h) {
   try { if (h) location.hash = h; else history.replaceState(null, '', location.pathname + location.search); } catch (err) { /* nichts */ }
 }
-function fromHash() { S.view = location.hash === '#verlauf' ? 'verlauf' : 'heute'; }
+function fromHash() { S.view = location.hash === '#verlauf' ? 'verlauf' : (location.hash === '#gewicht' ? 'gewicht' : 'heute'); }
 window.addEventListener('hashchange', function () { fromHash(); render(); });
 document.querySelectorAll('.tab').forEach(function (b) {
   b.addEventListener('click', function () {
     S.view = b.dataset.view;
-    setHash(S.view === 'verlauf' ? 'verlauf' : '');
+    setHash(S.view === 'heute' ? '' : S.view);
     render(); window.scrollTo(0, 0);
   });
 });
