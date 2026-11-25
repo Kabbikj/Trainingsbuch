@@ -123,9 +123,15 @@ button, input, textarea { font: inherit; color: inherit; }
 .tabs { gap: 2px; }
 @media (max-width: 420px) { .date-btn small { display: none; } .date-btn { font-size: 17px; } .tab { padding: 6px 5px; font-size: 13.5px; } .top-row { gap: 4px; } }
 .tab[aria-current="page"] { color: var(--wine); background: var(--surface-2); }
+.tab { display: grid; place-items: center; width: 40px; height: 36px; padding: 0; }
+.tab svg { width: 22px; height: 22px; display: block; }
 .chips { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0 10px; scrollbar-width: none; }
 .chips::-webkit-scrollbar { display: none; }
 .chips[hidden] { display: none; }
+.wo-chips { padding: 0 0 2px; }
+.wo-meta + .wo-chips { padding-top: 10px; }
+.chip-icon { display: grid; place-items: center; padding: 5px 14px; }
+.chip-icon svg { width: 20px; height: 20px; display: block; }
 .chip {
   flex: none;
   border: 1px solid var(--line); background: var(--surface);
@@ -234,7 +240,8 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
 .f-notes { margin: 14px 0 0; }
 .f-lastnote { margin: 0 0 6px; font-size: 13px; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; white-space: pre-line; }
 .f-lastnote.open { display: block; }
-.f-note { width: 100%; min-height: 48px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 16px; resize: none; overflow: hidden; display: block; }
+.hist-note, .h-note, .lastnote { white-space: pre-line; }
+.f-note { width: 100%; min-height: 48px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 16px; resize: none; overflow-y: auto; display: block; }
 .f-note:focus { border-color: var(--rose); outline: none; }
 .rest-note { margin: 10px 0 0; text-align: left; }
 .f-icons { display: flex; gap: 8px; margin: 8px 0 0; }
@@ -260,7 +267,7 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
 .hold-btn { margin: 8px 0 0; min-height: 44px; padding: 0 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font-weight: 700; font-size: 16px; color: var(--wine); cursor: pointer; }
 .rir { margin: 12px 0 0; }
 .rir p { margin: 0 0 6px; font-size: 13px; color: var(--faint); }
-.rir-btns { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.rir-btns { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
 .rir-btns button { min-height: 44px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font-size: 17px; font-weight: 700; color: var(--muted); cursor: pointer; }
 .rir-btns button[aria-pressed="true"] { background: var(--wine); border-color: var(--wine); color: var(--surface); }
 .more { margin: 8px 0 0; }
@@ -401,12 +408,12 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
         <input type="date" id="dateInput" class="date-hidden" tabindex="-1" aria-hidden="true">
       </div>
       <nav class="tabs" aria-label="Ansicht">
-        <button class="tab" type="button" data-view="heute">Training</button>
-        <button class="tab" type="button" data-view="verlauf">Verlauf</button>
-        <button class="tab" type="button" data-view="gewicht">Gewicht</button>
+        <button class="tab" type="button" data-view="heute" aria-label="Training" title="Training"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 7v10M17.5 7v10M3.5 10v4M20.5 10v4M6.5 12h11"/></svg></button>
+        <button class="tab" type="button" data-view="verlauf" aria-label="Verlauf" title="Verlauf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 7v5l3 2"/></svg></button>
+        <button class="tab" type="button" data-view="gewicht" aria-label="Gewicht" title="Gewicht"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M8 10a5 5 0 0 1 8 0"/><path d="M12 10.5l1.5-2"/></svg></button>
       </nav>
     </div>
-    <div class="chips" id="chips" role="group" aria-label="Einheit wählen"></div>
+    <div class="chips" id="chips" role="group" aria-label="Ansicht wählen"></div>
   </div>
 </header>
 <main id="app"></main>
@@ -536,7 +543,7 @@ const WO = {
     e('2b', 'ruderBauch', 3, '10–12', { warm: 1, cue: CUE.ruder }),
     e('3a', 'dips', 2, '8–12', { name: 'Dips am Dip-Assistenten', cue: CUE.dips1 }),
     e('3b', 'curl', 2, '10–15', { from30: 3, cue: CUE.curl }),
-    e('4a', 'trizDrueck', 2, '10–15', { from30: 3, cue: CUE.trizDrueck }),
+    e('4a', 'trizKopf', 2, '10–15', { from30: 3, cue: CUE.trizKopf }),
     e('4b', 'carry', 4, '30', { side: true, cue: CUE.carry1 }),
     e('5a', 'seitheben', 2, '12–20', { from30: 3, cue: CUE.seitheben }),
     e('5b', 'nacken', 2, '15–25', { cue: CUE.nacken, note: 'Erste Woche ohne Scheibe' })
@@ -1139,22 +1146,22 @@ function startWeight(item) {
   }
   let v;
   switch (id) {
-    case 'trizDrueck': v = refWeight('trizKopf'); if (!v) return { w: 11, text: '11 kg' }; v = lNearest(STACK_LIST, v * 1.3); return { w: v, text: fmtNum(v) + ' kg, etwas mehr als beim Trizepsstrecken über Kopf' };
+    case 'trizDrueck': v = refWeight('trizKopf'); if (!v) return { w: 11, text: '11 kg' }; v = lNearest(TOWER_LIST, v * 1.3); return { w: v, text: fmtNum(v) + ' kg, etwas mehr als beim Trizepsstrecken über Kopf' };
     case 'hammer': v = refWeight('curl'); return v ? { w: kh(v), text: 'etwa ' + fmtNum(kh(v)) + ' kg, so viel wie beim Schrägbank-Curl' } : null;
     case 'rudernEinarm': v = refWeight('ruderBauch'); return v ? { w: kh(v * 1.2), text: 'etwa ' + fmtNum(kh(v * 1.2)) + ' kg, etwas mehr als beim Rudern auf der Schrägbank' } : null;
     case 'bulgarian': v = refWeight('goblet'); if (!v) return null; v = v * 0.25; return v < 2 ? { w: 0, text: 'erst ohne Gewicht' } : { w: kh(v), text: 'etwa ' + fmtNum(kh(v)) + ' kg pro Hand, ein Viertel deines Goblet-Squat-Gewichts' };
     case 'kniebeuge': return { w: 20, text: 'mit der leeren Stange, 20 kg, damit die Technik sitzt' };
     case 'beinpresse': v = refWeight('goblet'); if (!v) return null; v = Math.round(v * 2.5 / 5) * 5; return { w: v, text: 'etwa ' + fmtNum(v) + ' kg aufgelegt, das Zweieinhalbfache deines Goblet Squats' };
-    case 'facepull': v = refWeight('latzug'); if (!v) return null; v = lNearest(STACK_LIST, v * 0.5); return { w: v, text: fmtNum(v) + ' kg, etwa die Hälfte deines Latzugs' };
-    case 'pallof': v = refWeight('latzug'); if (!v) return null; v = lNearest(STACK_LIST, v * 0.4); return { w: v, text: fmtNum(v) + ' kg, gut ein Drittel deines Latzugs' };
-    case 'fliegende': v = refWeight('bankKH'); if (!v) return { w: 4.5, text: '4,5 kg pro Seite' }; v = lNearest(STACK_LIST, v * 0.5); return { w: v, text: fmtNum(v) + ' kg pro Seite' };
+    case 'facepull': v = refWeight('latzug'); if (!v) return null; v = lNearest(TOWER_LIST, v * 0.5); return { w: v, text: fmtNum(v) + ' kg, etwa die Hälfte deines Latzugs' };
+    case 'pallof': v = refWeight('latzug'); if (!v) return null; v = lNearest(TOWER_LIST, v * 0.4); return { w: v, text: fmtNum(v) + ' kg, gut ein Drittel deines Latzugs' };
+    case 'fliegende': v = refWeight('bankKH'); if (!v) return { w: 4.5, text: '4,5 kg pro Seite' }; v = lNearest(TOWER_LIST, v * 0.5); return { w: v, text: fmtNum(v) + ' kg pro Seite' };
     case 'beinbeuger': v = refWeight('rdl'); v = Math.max(9.1, v ? r1(v * 2 * 0.8) : 13.6); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg' };
     case 'klimmzug': {
       const lat = refWeight('latzug'), dip = refWeight('dips'), bw = bodyWeight();
       const a = lat ? bw - lat * 1.2 : null, b = dip !== null && dip !== undefined ? dip + 10 : null;
       const cands = [a, b].filter(function (x) { return x !== null && !isNaN(x); });
       if (!cands.length) return null;
-      v = lCeil(STACK_LIST, Math.max.apply(null, cands));
+      v = lCeil(TOWER_LIST, Math.max.apply(null, cands));
       return { w: v, text: fmtNum(v) + ' kg Hilfe, geschätzt aus Latzug und Dips' };
     }
   }
@@ -1274,12 +1281,18 @@ function khStep(exId, w, dir) {
 }
 function machineStep(exId) { return learnedStep(exId) || MACHINE_STEP; }
 
-/* Kabelstapel in deinem Studio (Foto vom Latzug): oben 4,5 kg, dann 11, 18, 25 … 134 kg,
-   jeweils wahlweise mit dem Aufsteckgewicht von 2,3 kg. Gilt für alle Kabelzüge und den Dip-Assistenten. */
+/* Latzug (Foto): oben 4,5 kg, dann 11, 18, 25 … 134 kg, jeweils wahlweise mit dem Aufsteckgewicht von 2,3 kg */
 const STACK = [4.5, 11, 18, 25, 32, 39, 45, 52, 59, 66, 73, 79, 86, 93, 100, 107, 113, 120, 127, 134];
 const ADDON = 2.3;
-const STACK_LIST = uniqSorted(STACK.concat(STACK.map(function (v) { return Math.round((v + ADDON) * 10) / 10; })));
-/* Scheiben (Waden, Nacken, Zusatzgewicht am Gürtel): 1,25 kg ist die kleinste, also alles in 1,25er-Schritten */
+const withAddon = function (a) { return uniqSorted(a.concat(a.map(function (v) { return Math.round((v + ADDON) * 10) / 10; }))); };
+const STACK_LIST = withAddon(STACK);
+/* Kabelturm (Trizeps, Face Pulls, Pallof, Fliegende) und Dip-Assistent: 4,5, 9, 14 kg und so weiter in 10-lb-Stufen,
+   ebenfalls mit 2,3 kg Aufsteckgewicht. Ab 18 kg angenommen, bitte bei Abweichung melden */
+const TOWER = [4.5, 9, 14, 18, 23, 27, 32, 36, 41, 45, 50, 54, 59, 64, 68, 73, 77, 82, 86, 91];
+const TOWER_LIST = withAddon(TOWER);
+/* Nacken: nur eine Scheibe auf der Stirn */
+const NECK_LIST = [0, 1.25, 2.5, 5, 10, 15, 20, 25];
+/* Scheiben (Waden, Zusatzgewicht am Gürtel): 1,25 kg ist die kleinste, also alles in 1,25er-Schritten */
 const PLATE_LIST = (function () { const a = []; for (let v = 0; v <= 200.001; v += 1.25) a.push(Math.round(v * 100) / 100); return a; })();
 const LH_LIST = (function () { const a = []; for (let v = 20; v <= 300; v += 2.5) a.push(v); return a; })();
 const DB_KB_LIST = uniqSorted(DB_LIST.concat(KB_LIST));
@@ -1287,7 +1300,8 @@ const DB_KB_LIST = uniqSorted(DB_LIST.concat(KB_LIST));
 function wList(exId, around) {
   const ex = EX[exId];
   if (ex.eq === 'kh') return SINGLE_WEIGHT[exId] ? DB_KB_LIST : DB_LIST;
-  if (ex.eq === 'kabel') return STACK_LIST;
+  if (ex.eq === 'kabel') return exId === 'latzug' ? STACK_LIST : TOWER_LIST;
+  if (exId === 'nacken') return NECK_LIST;
   if (ex.eq === 'scheibe' || exId === 'waden') return PLATE_LIST;
   if (ex.eq === 'lh') return LH_LIST;
   if (ex.eq === 'maschine') {
@@ -1321,7 +1335,7 @@ function loadSpace(exId, mode, around) {
   if (ex.t === 'assist') {
     const bw = bodyWeight();
     if (mode === 'zusatz') return { list: PLATE_LIST.map(function (z) { return Math.round((bw + z) * 100) / 100; }), to: function (z) { return bw + z; }, from: function (x) { return Math.max(0, Math.round((x - bw) * 100) / 100); } };
-    const loads = uniqSorted([bw].concat(STACK_LIST.filter(function (a) { return a < bw - 1; }).map(function (a) { return Math.round((bw - a) * 100) / 100; })));
+    const loads = uniqSorted([bw].concat(TOWER_LIST.filter(function (a) { return a < bw - 1; }).map(function (a) { return Math.round((bw - a) * 100) / 100; })));
     return { list: loads, to: function (a) { return bw - a; }, from: function (x) { return Math.max(0, Math.round((bw - x) * 100) / 100); } };
   }
   const L = wList(exId, around);
@@ -1366,7 +1380,13 @@ function wUnit(exId, v, mode) {
 }
 
 const STOP_RULE = 'Hör erst auf, wenn noch 1–3 sauber gingen, auch über der oberen Zahl. So findet die App dein Gewicht';
-const EXTRA_WHY = 'mit weniger Gewicht. Links bestimmt das Satzende, so holt die schwächere Seite auf. Bis nichts mehr geht, danach zählen halbe Wiederholungen unten auch';
+/* Reserve-Knöpfe: Anzeige und der Wert, mit dem gerechnet wird */
+const RIR_OPTS = [['0', 0], ['1–2', 1.5], ['3–4', 3.5], ['5–9', 7], ['10+', 12]];
+function rirLabel(v) {
+  const o = RIR_OPTS.find(function (x) { return x[1] === v; });
+  return o ? o[0] : (v === 3 ? '3+' : fmtNum(v));
+}
+const EXTRA_WHY = 'mit weniger Gewicht. Links bestimmt das Satzende, so holt die schwächere Seite auf. Kommst du nicht mehr ganz hoch, mach im unteren Bereich halbe Wiederholungen weiter, bis auch die nicht mehr gehen';
 /* Wurde in dieser Einheit schon mit einem anderen Gewicht gearbeitet als vorgeschlagen? Dann passt der alte Vorschlag nicht mehr */
 function changedInSession(item, sug) {
   const t = EX[item.ex].t;
@@ -1378,7 +1398,7 @@ function changedInSession(item, sug) {
 /* Gewichte für die Plus- und Minus-Knöpfe */
 function btnList(item, i, d, base) {
   const t = EX[item.ex].t;
-  if (t === 'assist' && i !== 'x') return d && d.mode === 'zusatz' ? PLATE_LIST : [0].concat(STACK_LIST);
+  if (t === 'assist' && i !== 'x') return d && d.mode === 'zusatz' ? PLATE_LIST : [0].concat(TOWER_LIST);
   return wList(item.ex, base);
 }
 
@@ -1401,7 +1421,8 @@ function sessionAdjust(item, i) {
   else if (num(prev.r) < rg.lo - 2) nw = downFrom(sp, w, r, rg);
   if (nw === null) return null;
   useListFor(item.ex);
-  return { w: nw, up: up, text: 'Satz ' + (j + 1) + ' lag mit ' + fmtNum(num(prev.r)) + ' Wiederholungen deutlich ' + (up ? 'über ' + rg.hi : 'unter ' + rg.lo) +
+  const done = fmtNum(num(prev.r)) + ' Wdh.' + (typeof prev.rir === 'number' ? ', noch ' + rirLabel(prev.rir) + ' übrig' : '');
+  return { w: nw, up: up, text: 'Satz ' + (j + 1) + ' lag deutlich ' + (up ? 'über ' + rg.hi : 'unter ' + rg.lo) + ' (' + done + ')' +
     ': nimm jetzt ' + wUnit(item.ex, nw, mode) + ' und versuch wieder ' + rg.lo + '–' + rg.hi };
 }
 
@@ -1421,7 +1442,6 @@ function lighter(item, w) {
   useListFor(item.ex);
   const ex = EX[item.ex], target = w * 0.9;
   if (ex.eq === 'lh') return Math.max(0, Math.floor(target / 2.5) * 2.5);
-  if (ex.eq === 'scheibe') { const v = Math.floor(target / 1.25) * 1.25; return v < w * 0.75 ? w : v; }
   if (ex.eq === 'kh') return khFloor(target);
   const L = wList(item.ex, w);
   if (L) {
@@ -1434,7 +1454,7 @@ function lighter(item, w) {
   return Math.max(0, Math.round((w - n * st) * 100) / 100);
 }
 /* Mehr Hilfe bei Dips und Klimmzügen: die nächste Stufe am Stapel */
-function moreHelp(w) { const n = lNext(STACK_LIST, w); return n === null ? w : n; }
+function moreHelp(w) { const n = lNext(TOWER_LIST, w); return n === null ? w : n; }
 
 /* Vorschlag für heute */
 function suggestion(item) {
@@ -1717,16 +1737,41 @@ function renderTop() {
   document.querySelectorAll('.tab').forEach(function (b) {
     if (b.dataset.view === S.view) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
+  /* Oben fest: Schritt für Schritt oder Liste. Die Einheit wählst du unter der Überschrift */
   const chips = document.getElementById('chips');
   chips.textContent = '';
   chips.hidden = S.view !== 'heute';
+  [['schritt', 'Schritt für Schritt', ICON_STEP], ['liste', 'Liste', ICON_LIST]].forEach(function (x) {
+    const b = el('button', 'chip chip-icon');
+    b.type = 'button';
+    b.innerHTML = x[2];
+    b.setAttribute('aria-label', x[1]);
+    b.title = x[1];
+    b.setAttribute('aria-pressed', String(S.ui === x[0]));
+    b.addEventListener('click', function () {
+      if (S.ui === x[0]) return;
+      S.ui = x[0];
+      try { localStorage.setItem(UI_KEY, S.ui); } catch (err) { /* nichts */ }
+      S.didScroll = true;
+      render(); window.scrollTo(0, 0);
+    });
+    chips.appendChild(b);
+  });
+}
+
+/* Einheit wählen, unter der Überschrift */
+function woChips() {
+  const box = el('div', 'chips wo-chips');
+  box.setAttribute('role', 'group');
+  box.setAttribute('aria-label', 'Einheit wählen');
   (isDeload(S.date) ? ['home'] : []).concat(PHASE_WO[phaseOf(S.date)]).forEach(function (id) {
     const b = el('button', 'chip', WO[id].name.split(',')[0].replace(' und Rumpf', ''));
     b.type = 'button';
     b.setAttribute('aria-pressed', String(id === S.wid));
     b.addEventListener('click', function () { S.wid = id; S.userPicked = true; S.didScroll = true; resetFocus(); render(); window.scrollTo(0, 0); });
-    chips.appendChild(b);
+    box.appendChild(b);
   });
+  return box;
 }
 
 function render() {
@@ -1739,7 +1784,7 @@ function render() {
   const ph = phaseOf(S.date);
   const homeOk = S.wid === 'home' && isDeload(S.date);
   if (!S.userPicked || !S.wid || (WO[S.wid].phase !== ph && !homeOk)) S.wid = chooseWorkout();
-  if (!S.wid) { releaseWake(); renderFree(app, ph); updateNext(); return; }
+  if (!S.wid) { document.getElementById('chips').hidden = true; releaseWake(); renderFree(app, ph); updateNext(); return; }
   restoreTick();
   renderWorkout(app);
   updateNext();
@@ -1757,6 +1802,7 @@ function renderFree(app, ph) {
   const head = el('div', 'wo-head');
   head.appendChild(el('h1', '', 'Heute ist frei'));
   head.appendChild(el('p', 'wo-meta', PHASE_NAME[ph]));
+  head.appendChild(woChips());
   head.appendChild(statusEl());
   app.appendChild(head);
   const box = el('div', 'free');
@@ -1787,21 +1833,8 @@ function renderFree(app, ph) {
 function renderWorkout(app) {
   const wo = WO[S.wid];
   const head = el('div', 'wo-head' + (S.ui === 'schritt' ? ' compact' : ''));
-  const titleRow = el('div', 'wo-title');
-  titleRow.appendChild(el('h1', '', wo.name));
-  const toList = S.ui === 'schritt';
-  const sw = el('button', 'view-switch'); sw.type = 'button';
-  sw.innerHTML = toList ? ICON_LIST : ICON_STEP;
-  sw.setAttribute('aria-label', toList ? 'Zur Listenansicht' : 'Zum Schritt-für-Schritt-Modus');
-  sw.title = toList ? 'Liste' : 'Schritt für Schritt';
-  sw.addEventListener('click', function () {
-    S.ui = toList ? 'liste' : 'schritt';
-    try { localStorage.setItem(UI_KEY, S.ui); } catch (err) { /* nichts */ }
-    S.didScroll = true;
-    render(); window.scrollTo(0, 0);
-  });
-  titleRow.appendChild(sw);
-  head.appendChild(titleRow);
+  /* Keine Überschrift: die gewählte Einheit oben in der Auswahl reicht */
+  head.appendChild(woChips());
   const wd = weekday(S.date);
   if (S.ui !== 'schritt') head.appendChild(el('p', 'wo-meta', (wo.home ? 'Entlastungswoche zu Hause' : PHASE_NAME[wo.phase]) + ', ' + wo.time(S.date)));
   head.appendChild(statusEl());
@@ -1814,7 +1847,7 @@ function renderWorkout(app) {
   if (S.noStorage) notes.push('Achtung: So geöffnet kann das Trainingsbuch nichts dauerhaft speichern. Was du einträgst, ist nach dem Schließen weg. Öffne die Datei auf einem anderen Weg.');
   if (S.mode === 'local' && countSessions() >= 3) {
     const lb = lastBackup();
-    if (!lb || Date.now() - lb > 30 * 86400000) notes.push('Deine Einträge liegen nur auf diesem Handy. Zeit für eine Sicherung: unter „Verlauf“ ganz unten.');
+    if (!lb || Date.now() - lb > 30 * 86400000) notes.push('Deine Einträge liegen nur auf diesem Handy. Zeit für eine Sicherung: oben beim Uhr-Symbol (Verlauf) ganz unten.');
   }
   const lt = lastTrainingDate();
   if (lt && daysBetween(lt, S.date) > BREAK_DAYS && !isDeload(S.date)) notes.push('Deine letzte Einheit ist ' + daysBetween(lt, S.date) + ' Tage her. Starte heute etwa 10 % leichter und arbeite dich in ein, zwei Einheiten wieder hoch. Die Vorschläge sind schon angepasst.');
@@ -1958,7 +1991,15 @@ function placeholderFor(item, i, sug, key) {
   const t = EX[item.ex].t;
   if (key === 'w' && i === 'x') {
     const lx = lastEntry(item.ex);
-    if (lx && lx.data.extra && num(lx.data.extra.w) !== null) return fmtNum(num(lx.data.extra.w));
+    if (lx && lx.data.extra && num(lx.data.extra.w) !== null) {
+      const xw = num(lx.data.extra.w), xr = num(lx.data.extra.r);
+      if (xr === null || (xr >= 6 && xr <= 15)) return fmtNum(xw);
+      /* Einbeinig trägt das Bein dein ganzes Körpergewicht, deshalb rechnet die App hier mit Körpergewicht plus Scheiben.
+         Ziel etwa 8 ganze Wiederholungen; weniger als 0 kg geht nicht */
+      const bw = bodyWeight(), L = wList(item.ex, xw) || PLATE_LIST;
+      const x = (bw + xw) * (30 + Math.min(xr, 40)) / (30 + 8) - bw;
+      return fmtNum(Math.max(0, xr < 6 ? lFloor(L, x) : lNearest(L, x)));
+    }
     const base = sug.next || sug.w;
     if (!base) return '';
     const L = wList(item.ex, base);
@@ -2449,7 +2490,7 @@ function renderFocus(app, wo) {
     det.appendChild(el('p', 'f-cue', item.cue));
     card.appendChild(det);
   }
-  card.appendChild(renderNotes(item, t, undoBtn));
+  card.appendChild(renderNotes(item, t, undoBtn, slot.i));
   wrap.appendChild(card);
 }
 
@@ -2467,9 +2508,9 @@ function renderRest(wrap, order) {
       const t = EX[prev.item.ex].t, k = prev.i === 'x' ? 'r' : mainKey(t);
       const unit = prev.i === 'x' ? ' Wdh.' : (t === 'time' ? ' s' : t === 'carry' ? ' m' : ' Wdh.');
       const wtxt = num(row.w) !== null ? fmtNum(num(row.w)) + ' kg' + (t === 'assist' && pd.mode !== 'zusatz' && prev.i !== 'x' ? ' Hilfe' : '') + ', ' : '';
-      const rirTxt = typeof row.rir === 'number' ? ', Reserve ' + (row.rir === 3 ? '3+' : row.rir) : '';
+      const rirTxt = typeof row.rir === 'number' ? ', noch ' + rirLabel(row.rir) : '';
       box.appendChild(el('p', 'rest-logged', 'Eingetragen: ' + prev.item.k + ' ' + exName(prev.item) + ', ' + setLabelOf(order, prev) + ': ' + wtxt + fmtNum(num(row[k])) + unit + rirTxt));
-      box.appendChild(noteArea(prev.item, 'f-note rest-note'));
+      box.appendChild(noteArea(prev.item, 'f-note rest-note', prev.i));
     }
   }
   const btns = el('div', 'rest-btns');
@@ -2482,11 +2523,9 @@ function renderRest(wrap, order) {
     });
     btns.appendChild(back);
   }
-  const more = el('button', '', '+30 s'); more.type = 'button';
-  more.addEventListener('click', function () { S.restUntil += 30000; S.restTotal += 30; saveTick(); drawRest(); });
   const end = el('button', 'primary', 'Pause beenden'); end.type = 'button';
   end.addEventListener('click', function () { S.restUntil = null; saveTick(); render(); window.scrollTo(0, 0); });
-  btns.appendChild(more); btns.appendChild(end); box.appendChild(btns);
+  btns.appendChild(end); box.appendChild(btns);
   const next = order[S.focusIdx];
   if (next) {
     const pv = el('div', 'rest-next');
@@ -2546,30 +2585,57 @@ const ICON_LIST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const ICON_STEP = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M10 9l3 3-3 3"/></svg>';
 const ICON_UNDO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg>';
 const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 7v5l3 2"/></svg>';
-/* Notiz direkt beschreibbar, darunter ⚡ für „Hat gezwickt“ und ein Symbol für den Verlauf */
-function noteArea(item, cls) {
+/* Notizen: eine pro Satz (data.notes mit den Schlüsseln 0, 1, 2 … und x für den Extrasatz),
+   dazu die allgemeine Notiz (data.note) aus der Liste und von früher. Angezeigt wird überall die Zusammenfassung */
+function noteKeyLabel(k) { return String(k) === 'x' ? 'Extrasatz' : 'Satz ' + (Number(k) + 1); }
+function noteSummary(data, skipKey) {
+  if (!data) return '';
+  const parts = [];
+  if (data.note && data.note.trim()) parts.push(data.note.trim());
+  const ns = data.notes || {};
+  Object.keys(ns).sort(function (a, b) { return (a === 'x' ? 999 : +a) - (b === 'x' ? 999 : +b); }).forEach(function (k) {
+    if (skipKey !== undefined && skipKey !== null && k === String(skipKey)) return;
+    const v = (ns[k] || '').trim();
+    if (v) parts.push(noteKeyLabel(k) + ': ' + v);
+  });
+  return parts.join('\n');
+}
+/* Notizfeld: mit key für einen Satz, ohne key die allgemeine Notiz der Übung */
+function noteArea(item, cls, key) {
   const d = exData(item, false);
+  const perSet = key !== undefined && key !== null;
   const ta = el('textarea', cls);
   ta.rows = 2;
-  ta.placeholder = 'Notiz zu ' + exName(item);
-  ta.setAttribute('aria-label', 'Notiz zu ' + exName(item));
-  ta.value = d && d.note ? d.note : '';
-  const grow = function () { ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight + 2, 240) + 'px'; };
-  ta.addEventListener('input', function () { const dd = exData(item, true); dd.note = ta.value; touch(1500); grow(); });
+  ta.placeholder = 'Notiz zu ' + (perSet ? noteKeyLabel(key) : exName(item));
+  ta.setAttribute('aria-label', 'Notiz zu ' + exName(item) + (perSet ? ', ' + noteKeyLabel(key) : ''));
+  ta.value = perSet ? (d && d.notes && d.notes[key] ? d.notes[key] : '') : (d && d.note ? d.note : '');
+  const grow = function () { ta.style.height = 'auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; };
+  ta.addEventListener('input', function () {
+    const dd = exData(item, true);
+    if (perSet) { if (!dd.notes) dd.notes = {}; if (ta.value) dd.notes[key] = ta.value; else delete dd.notes[key]; }
+    else dd.note = ta.value;
+    touch(1500); grow();
+  });
   ta.addEventListener('change', function () { flush(sid(S.date, S.wid)); });
   setTimeout(grow, 0);
   return ta;
 }
-function renderNotes(item, t, undoBtn) {
+function renderNotes(item, t, undoBtn, key) {
   const box = el('div', 'f-notes');
   const prev = shownEntry(item);
-  if (prev && prev.data.note) {
-    const ln = el('p', 'f-lastnote', 'Notiz vom ' + fmtDay(prev.date) + ': ' + prev.data.note);
+  const prevSum = prev ? noteSummary(prev.data) : '';
+  /* Was du heute zu den anderen Sätzen dieser Übung notiert hast, steht mit in der alten Notiz (zum Aufklappen) */
+  const todaySum = noteSummary(exData(item, false), key);
+  if (prevSum || todaySum) {
+    const parts = [];
+    if (prevSum) parts.push('Notiz vom ' + fmtDay(prev.date) + ': ' + prevSum);
+    if (todaySum) parts.push('Heute: ' + todaySum);
+    const ln = el('p', 'f-lastnote', parts.join('\n\n'));
     ln.title = 'Antippen zum Aufklappen';
     ln.addEventListener('click', function () { ln.classList.toggle('open'); });
     box.appendChild(ln);
   }
-  box.appendChild(noteArea(item, 'f-note'));
+  box.appendChild(noteArea(item, 'f-note', key));
   const icons = el('div', 'f-icons');
   const d = exData(item, false);
   const pain = el('button', 'f-icon f-icon-pain', '⚡'); pain.type = 'button';
@@ -2588,7 +2654,8 @@ function renderNotes(item, t, undoBtn) {
       const wtx = weightText(x.data, t);
       li.appendChild(el('b', '', (wtx ? wtx + ', ' : '') + setsText(x.data, t, item.side)));
       if (x.data.pain) li.appendChild(document.createTextNode(' (gezwickt)'));
-      if (x.data.note) li.appendChild(el('span', 'hist-note', x.data.note));
+      const xs = noteSummary(x.data);
+      if (xs) li.appendChild(el('span', 'hist-note', xs));
       ul.appendChild(li);
     });
     panel.appendChild(ul);
@@ -2621,8 +2688,11 @@ function renderMore(item, t) {
   det.appendChild(sum);
   const d = exData(item, false);
   const prev = lastEntry(item.ex);
-  if (prev && prev.data.note) det.appendChild(el('p', 'lastnote', 'Notiz vom ' + fmtDay(prev.date) + ': ' + prev.data.note));
-  if (prev && prev.data.note && !det.open) { sum.textContent = 'Notiz und Verlauf (letzte Notiz vorhanden)'; }
+  const prevSum = prev ? noteSummary(prev.data) : '';
+  if (prevSum) det.appendChild(el('p', 'lastnote', 'Notiz vom ' + fmtDay(prev.date) + ': ' + prevSum));
+  if (prevSum && !det.open) { sum.textContent = 'Notiz und Verlauf (letzte Notiz vorhanden)'; }
+  const setSum = d ? noteSummary({ notes: d.notes }) : '';
+  if (setSum) det.appendChild(el('p', 'lastnote', 'Heute zu den Sätzen: ' + setSum));
   const ta = el('textarea');
   ta.placeholder = 'Notiz für heute, zum Beispiel wie es sich angefühlt hat';
   ta.setAttribute('aria-label', 'Notiz zu ' + exName(item));
@@ -2707,7 +2777,7 @@ function renderHistory(app) {
     })
     .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : (b.upd || 0) - (a.upd || 0); });
   if (!list.length) {
-    app.appendChild(el('p', 'h-empty', S.loaded ? 'Noch keine Einheit eingetragen. Unter „Training“ trägst du die erste ein.' : 'Lädt …'));
+    app.appendChild(el('p', 'h-empty', S.loaded ? 'Noch keine Einheit eingetragen. Beim Hantel-Symbol oben trägst du die erste ein.' : 'Lädt …'));
     renderBackup(app);
     return;
   }
@@ -2737,7 +2807,7 @@ function renderHistory(app) {
       p.appendChild(el('b', '', (wtx ? wtx + ', ' : '') + setsText(data, EX[item.ex].t, item.side)));
       if (data.pain) p.appendChild(document.createTextNode(' (gezwickt)'));
       body.appendChild(p);
-      if (data.note) body.appendChild(el('p', '', 'Notiz: ' + data.note));
+      if (noteSummary(data)) body.appendChild(el('p', 'h-note', 'Notiz: ' + noteSummary(data)));
     });
     Object.keys(s.ex || {}).forEach(function (k) {
       if (!EX[k] || WO[s.w].list.some(function (it) { return it.ex === k; })) return;
@@ -2748,7 +2818,7 @@ function renderHistory(app) {
       const wtx = weightText(data, EX[k].t);
       p.appendChild(el('b', '', (wtx ? wtx + ', ' : '') + setsText(data, EX[k].t, false)));
       body.appendChild(p);
-      if (data.note) body.appendChild(el('p', '', 'Notiz: ' + data.note));
+      if (noteSummary(data)) body.appendChild(el('p', 'h-note', 'Notiz: ' + noteSummary(data)));
     });
     const open = el('button', 'linkish', 'Einheit öffnen');
     open.type = 'button';
