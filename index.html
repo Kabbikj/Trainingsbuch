@@ -382,6 +382,7 @@ main { max-width: 720px; margin: 0 auto; padding: 18px 16px 120px; }
 .rest-next { margin: 18px 0 0; padding: 12px; border-radius: 12px; background: var(--surface-2); text-align: left; font-size: 14px; color: var(--muted); }
 .rest-next b { display: block; font-size: 17px; color: var(--ink); margin: 2px 0; }
 .rest-next .f-cue b { display: inline; font-size: inherit; margin: 0; font-weight: 600; }
+.rest-next .rest-adj { display: block; margin-top: 6px; color: var(--ink); font-weight: 600; }
 @media (min-width: 600px) {
   .wo-head h1, .h-title { font-size: 34px; }
   .group { grid-template-columns: 58px 1fr; }
@@ -474,13 +475,13 @@ const CUE = {
   waden2: 'Unten 2 s halten, Hüfte mittig, links bestimmt das Satzende; danach Extrasatz links mit weniger Gewicht',
   waden3: 'Unten 2 s halten, Hüfte mittig, links bestimmt das Satzende; dann halbe Wdh. unten, leichter Extrasatz links',
   schraeg: 'Bank auf 30°, unten tief in die Dehnung, Schulterblätter in die Arschtaschen',
-  latzug: 'Mit den Ellbogen ziehen, Schulterblätter in die Arschtaschen',
-  trizKopf: 'Kabel oben, Ellbogen zeigen nach vorn, unten volle Dehnung',
+  latzug: 'Gerade Stange im Obergriff, schulterbreit, Hände nur als Haken. Mit den Ellbogen ziehen, Schulterblätter in die Arschtaschen',
+  trizKopf: 'Kabel auf Schulterhöhe, Rücken zum Kabel. Ellbogen zeigen nach vorn, sie müssen nicht senkrecht über dem Kopf stehen, unten volle Dehnung',
   curl: 'Bank auf 45–60°, Arme hängen hinter dem Körper, langsam ablassen',
   seitstuetz: 'Hüfte nicht nach hinten, Unterarm in den Boden drücken, Schulter weg vom Ohr, Form vor Dauer, links zuerst, rechts gleich lang',
   handgelenk1: 'Unterarme auf der Bank, nur die Handgelenke bewegen, Hantel bis in die Fingerspitzen abrollen lassen und wieder einrollen',
   handgelenk2: 'Unterarme auf der Bank, nur die Handgelenke bewegen, Hantel bis in die Fingerspitzen abrollen lassen und langsam wieder einrollen',
-  seitheben: 'Oberkörper etwa 15° nach vorn, Arme etwas vor dem Körper, Oberkörper nicht eindrehen. Hanteln mit den Ellbogen zu den Wänden schieben statt hochheben, ohne Schwung bis Schulterhöhe, langsam ablassen, Schultern weg von den Ohren',
+  seitheben: 'Hüfte leicht nach hinten, Arme etwas vor dem Körper, Oberkörper nicht eindrehen. Hanteln mit den Ellbogen zu den Wänden schieben statt hochheben, ohne Schwung bis Schulterhöhe, langsam ablassen, Schultern weg von den Ohren',
   nacken: 'Kopf über der Bankkante, Scheibe mit Handtuch auf der Stirn, Kinn zur Brust rollen, nur bis waagerecht absenken',
   rdl1: 'Hüfte nach hinten schieben, Rücken bleibt gerade, Zug hinten im Oberschenkel',
   rdl2: 'Hüfte nach hinten schieben, Rücken bleibt gerade, Hanteln nah an den Beinen, Zug hinten im Oberschenkel',
@@ -1138,23 +1139,23 @@ function startWeight(item) {
   }
   let v;
   switch (id) {
-    case 'trizDrueck': v = refWeight('trizKopf'); if (!v) return { w: 9.1, text: 'etwa 9 kg' }; v = Math.max(4.5, r1(v * 1.3)); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg, etwas mehr als beim Trizepsstrecken über Kopf' };
+    case 'trizDrueck': v = refWeight('trizKopf'); if (!v) return { w: 11, text: '11 kg' }; v = lNearest(STACK_LIST, v * 1.3); return { w: v, text: fmtNum(v) + ' kg, etwas mehr als beim Trizepsstrecken über Kopf' };
     case 'hammer': v = refWeight('curl'); return v ? { w: kh(v), text: 'etwa ' + fmtNum(kh(v)) + ' kg, so viel wie beim Schrägbank-Curl' } : null;
     case 'rudernEinarm': v = refWeight('ruderBauch'); return v ? { w: kh(v * 1.2), text: 'etwa ' + fmtNum(kh(v * 1.2)) + ' kg, etwas mehr als beim Rudern auf der Schrägbank' } : null;
     case 'bulgarian': v = refWeight('goblet'); if (!v) return null; v = v * 0.25; return v < 2 ? { w: 0, text: 'erst ohne Gewicht' } : { w: kh(v), text: 'etwa ' + fmtNum(kh(v)) + ' kg pro Hand, ein Viertel deines Goblet-Squat-Gewichts' };
     case 'kniebeuge': return { w: 20, text: 'mit der leeren Stange, 20 kg, damit die Technik sitzt' };
     case 'beinpresse': v = refWeight('goblet'); if (!v) return null; v = Math.round(v * 2.5 / 5) * 5; return { w: v, text: 'etwa ' + fmtNum(v) + ' kg aufgelegt, das Zweieinhalbfache deines Goblet Squats' };
-    case 'facepull': v = refWeight('latzug'); if (!v) return null; v = r1(v * 0.5); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg, die Hälfte deines Latzugs' };
-    case 'pallof': v = refWeight('latzug'); if (!v) return null; v = r1(v * 0.4); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg, gut ein Drittel deines Latzugs' };
-    case 'fliegende': v = refWeight('bankKH'); if (!v) return { w: 4.5, text: 'etwa 4,5 kg pro Seite' }; v = Math.max(4.5, r1(v * 0.5)); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg pro Seite' };
+    case 'facepull': v = refWeight('latzug'); if (!v) return null; v = lNearest(STACK_LIST, v * 0.5); return { w: v, text: fmtNum(v) + ' kg, etwa die Hälfte deines Latzugs' };
+    case 'pallof': v = refWeight('latzug'); if (!v) return null; v = lNearest(STACK_LIST, v * 0.4); return { w: v, text: fmtNum(v) + ' kg, gut ein Drittel deines Latzugs' };
+    case 'fliegende': v = refWeight('bankKH'); if (!v) return { w: 4.5, text: '4,5 kg pro Seite' }; v = lNearest(STACK_LIST, v * 0.5); return { w: v, text: fmtNum(v) + ' kg pro Seite' };
     case 'beinbeuger': v = refWeight('rdl'); v = Math.max(9.1, v ? r1(v * 2 * 0.8) : 13.6); return { w: v, text: 'etwa ' + fmtNum(v) + ' kg' };
     case 'klimmzug': {
       const lat = refWeight('latzug'), dip = refWeight('dips'), bw = bodyWeight();
       const a = lat ? bw - lat * 1.2 : null, b = dip !== null && dip !== undefined ? dip + 10 : null;
       const cands = [a, b].filter(function (x) { return x !== null && !isNaN(x); });
       if (!cands.length) return null;
-      v = Math.round(Math.max.apply(null, cands));
-      return { w: v, text: 'etwa ' + fmtNum(v) + ' kg Hilfe, geschätzt aus Latzug und Dips' };
+      v = lCeil(STACK_LIST, Math.max.apply(null, cands));
+      return { w: v, text: fmtNum(v) + ' kg Hilfe, geschätzt aus Latzug und Dips' };
     }
   }
   return null;
@@ -1174,8 +1175,26 @@ function entryWeight(data, t) {
   if (t === 'assist' && data.mode !== 'zusatz') return Math.min.apply(null, ws);
   return Math.max.apply(null, ws);
 }
+function mixedWeights(data, t) {
+  if (t !== 'wr' && t !== 'assist') return false;
+  const ws = loggedSets(data, t).map(function (x) { return num(x.w); }).filter(function (v) { return v !== null; });
+  return ws.some(function (v) { return Math.abs(v - ws[0]) > 0.01; });
+}
 function setsText(data, t, side) {
   const k = mainKey(t);
+  if (mixedWeights(data, t)) {
+    /* Gewicht in der Einheit gewechselt: je Gewicht eine Gruppe, etwa „5 kg × 30, 7,5 kg × 12 · 11“ */
+    const unit = t === 'assist' ? (data.mode === 'zusatz' ? ' kg Zusatz' : ' kg Hilfe') : ' kg';
+    const groups = [];
+    loggedSets(data, t).forEach(function (x) {
+      const w = num(x.w), g = groups[groups.length - 1];
+      if (g && (g.w === w || (g.w !== null && w !== null && Math.abs(g.w - w) < 0.01))) g.r.push(fmtNum(num(x[k])));
+      else groups.push({ w: w, r: [fmtNum(num(x[k]))] });
+    });
+    let mt = groups.map(function (g) { return (g.w !== null ? fmtNum(g.w) + unit + ' × ' : '') + g.r.join(' · '); }).join(', ');
+    if (data.extra && num(data.extra.r) !== null) mt += ', extra links ' + fmtNum(num(data.extra.r));
+    return mt;
+  }
   const vals = loggedSets(data, t).map(function (x) { return fmtNum(num(x[k])); });
   let txt = vals.join(' · ');
   if (t === 'time') txt += ' s';
@@ -1184,6 +1203,7 @@ function setsText(data, t, side) {
   return txt;
 }
 function weightText(data, t) {
+  if (mixedWeights(data, t)) return '';
   const w = entryWeight(data, t);
   if (w === null) return '';
   if (t === 'assist') return fmtNum(w) + ' kg ' + (data.mode === 'zusatz' ? 'Zusatz' : 'Hilfe');
@@ -1254,6 +1274,137 @@ function khStep(exId, w, dir) {
 }
 function machineStep(exId) { return learnedStep(exId) || MACHINE_STEP; }
 
+/* Kabelstapel in deinem Studio (Foto vom Latzug): oben 4,5 kg, dann 11, 18, 25 … 134 kg,
+   jeweils wahlweise mit dem Aufsteckgewicht von 2,3 kg. Gilt für alle Kabelzüge und den Dip-Assistenten. */
+const STACK = [4.5, 11, 18, 25, 32, 39, 45, 52, 59, 66, 73, 79, 86, 93, 100, 107, 113, 120, 127, 134];
+const ADDON = 2.3;
+const STACK_LIST = uniqSorted(STACK.concat(STACK.map(function (v) { return Math.round((v + ADDON) * 10) / 10; })));
+/* Scheiben (Waden, Nacken, Zusatzgewicht am Gürtel): 1,25 kg ist die kleinste, also alles in 1,25er-Schritten */
+const PLATE_LIST = (function () { const a = []; for (let v = 0; v <= 200.001; v += 1.25) a.push(Math.round(v * 100) / 100); return a; })();
+const LH_LIST = (function () { const a = []; for (let v = 20; v <= 300; v += 2.5) a.push(v); return a; })();
+const DB_KB_LIST = uniqSorted(DB_LIST.concat(KB_LIST));
+/* Welche Gewichte es für eine Übung wirklich gibt; bei unbekannten Maschinen gleichmäßige Stufen um das letzte Gewicht */
+function wList(exId, around) {
+  const ex = EX[exId];
+  if (ex.eq === 'kh') return SINGLE_WEIGHT[exId] ? DB_KB_LIST : DB_LIST;
+  if (ex.eq === 'kabel') return STACK_LIST;
+  if (ex.eq === 'scheibe' || exId === 'waden') return PLATE_LIST;
+  if (ex.eq === 'lh') return LH_LIST;
+  if (ex.eq === 'maschine') {
+    const st = machineStep(exId), base = around || st, a = [];
+    for (let n = -60; n <= 60; n++) { const v = Math.round((base + n * st) * 100) / 100; if (v >= 0) a.push(v); }
+    return uniqSorted(a);
+  }
+  return null;
+}
+function lNext(list, w) { for (let i = 0; i < list.length; i++) if (list[i] > w + 0.01) return list[i]; return null; }
+function lPrev(list, w) { for (let i = list.length - 1; i >= 0; i--) if (list[i] < w - 0.01) return list[i]; return null; }
+function lFloor(list, x) { let r = list[0]; list.forEach(function (v) { if (v <= x + 0.01) r = v; }); return r; }
+function lCeil(list, x) { for (let i = 0; i < list.length; i++) if (list[i] >= x - 0.01) return list[i]; return list[list.length - 1]; }
+function lNearest(list, x) {
+  let best = list[0];
+  list.forEach(function (v) { if (Math.abs(v - x) < Math.abs(best - x) - 1e-9) best = v; });
+  return best;
+}
+/* Nächstes echtes Gewicht, aber höchstens 5 % über dem errechneten, sonst das darunter */
+function lPick(list, x) { const n = lNearest(list, x); return n > x * 1.05 + 0.01 ? lFloor(list, x) : n; }
+function snapW(exId, v) { const L = wList(exId, v); return L ? lNearest(L, v) : Math.round(v * 10) / 10; }
+
+/* Steigerung per Formel (Epley): aus Gewicht w und Wiederholungen r bis zum Limit
+   folgt das Gewicht für rZiel Wiederholungen:  w · (30 + r) / (30 + rZiel).
+   Rechnet in „Last“: bei Dips mit Hilfe ist das Körpergewicht minus Hilfe. */
+function effReps(set) { return num(set.r) + (typeof set.rir === 'number' ? set.rir : 0); }
+function loadFor(w, r, rZiel) { return w * (30 + Math.min(r, 40)) / (30 + rZiel); }
+function repsAt(w, r, w2) { return w / w2 * (30 + Math.min(r, 40)) - 30; }
+function loadSpace(exId, mode, around) {
+  const ex = EX[exId];
+  if (ex.t === 'assist') {
+    const bw = bodyWeight();
+    if (mode === 'zusatz') return { list: PLATE_LIST.map(function (z) { return Math.round((bw + z) * 100) / 100; }), to: function (z) { return bw + z; }, from: function (x) { return Math.max(0, Math.round((x - bw) * 100) / 100); } };
+    const loads = uniqSorted([bw].concat(STACK_LIST.filter(function (a) { return a < bw - 1; }).map(function (a) { return Math.round((bw - a) * 100) / 100; })));
+    return { list: loads, to: function (a) { return bw - a; }, from: function (x) { return Math.max(0, Math.round((bw - x) * 100) / 100); } };
+  }
+  const L = wList(exId, around);
+  if (!L) return null;
+  return { list: L, to: function (v) { return v; }, from: function (v) { return v; } };
+}
+/* Schwerer: das Gewicht aus der Formel (Ziel: untere Zahl + 2 Reserve) oder die nächste Stufe,
+   wenn du damit voraussichtlich höchstens 2 unter der unteren Zahl landest. Kleinste Stufen (bis 1,25 kg) gehen immer. */
+function upFrom(sp, w, r, rg) {
+  const W = sp.to(w);
+  if (!(W > 0)) { const n = lNext(sp.list, 0); return n === null ? null : sp.from(n); }
+  let best = W;
+  const f = lPick(sp.list, loadFor(W, r, rg.lo + 2));
+  if (f > best + 0.01) best = f;
+  const s = lNext(sp.list, W);
+  if (s !== null && s > best + 0.01 && (s - W <= 1.26 || repsAt(W, r, s) >= rg.lo - 2)) best = s;
+  return best > W + 0.01 ? sp.from(best) : null;
+}
+/* Leichter: Ziel untere Zahl + 1 Reserve, mindestens eine Stufe */
+function downFrom(sp, w, r, rg) {
+  const W = sp.to(w);
+  if (!(W > 0)) return null;
+  let x = lFloor(sp.list, loadFor(W, r, rg.lo + 1));
+  if (x >= W - 0.01) x = lPrev(sp.list, W);
+  return x === null ? null : sp.from(x);
+}
+/* Wie viele Wiederholungen bei w nötig sind, damit die nächste Stufe s passt */
+function repsNeeded(W, s, lo) { return Math.ceil(s / W * (30 + lo - 2) - 30 - 1e-9); }
+function median(a) {
+  if (!a.length) return null;
+  const b = a.slice().sort(function (x, y) { return x - y; }), m = Math.floor(b.length / 2);
+  return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2;
+}
+/* Sätze mit dem Arbeitsgewicht der Einheit (bei Hilfe: der geringsten Hilfe) */
+function topSets(data, t) {
+  const w = entryWeight(data, t);
+  return loggedSets(data, t).filter(function (x) { return w === null || num(x.w) === null || Math.abs(num(x.w) - w) < 0.01; });
+}
+function wUnit(exId, v, mode) {
+  if (EX[exId].t === 'assist') return fmtNum(v) + ' kg ' + (mode === 'zusatz' ? 'Zusatz' : 'Hilfe');
+  return kgTxt(exId, v);
+}
+
+const STOP_RULE = 'Hör erst auf, wenn noch 1–3 sauber gingen, auch über der oberen Zahl. So findet die App dein Gewicht';
+const EXTRA_WHY = 'mit weniger Gewicht. Links bestimmt das Satzende, so holt die schwächere Seite auf. Bis nichts mehr geht, danach zählen halbe Wiederholungen unten auch';
+/* Wurde in dieser Einheit schon mit einem anderen Gewicht gearbeitet als vorgeschlagen? Dann passt der alte Vorschlag nicht mehr */
+function changedInSession(item, sug) {
+  const t = EX[item.ex].t;
+  if (t !== 'wr' && t !== 'assist') return false;
+  const d = exData(item, false), exp = sug.next || sug.w;
+  if (!d || exp === null || exp === undefined) return false;
+  return d.sets.some(function (x) { return x && x.d && num(x.w) !== null && Math.abs(num(x.w) - exp) > 0.01; });
+}
+/* Gewichte für die Plus- und Minus-Knöpfe */
+function btnList(item, i, d, base) {
+  const t = EX[item.ex].t;
+  if (t === 'assist' && i !== 'x') return d && d.mode === 'zusatz' ? PLATE_LIST : [0].concat(STACK_LIST);
+  return wList(item.ex, base);
+}
+
+/* Innerhalb der Einheit: lag der letzte Satz weit über oder unter dem Bereich, gleich das Gewicht anpassen */
+function sessionAdjust(item, i) {
+  if (item.home || typeof i !== 'number' || i < 1 || isDeload(S.date)) return null;
+  const t = EX[item.ex].t;
+  if (t !== 'wr' && t !== 'assist') return null;
+  const d = exData(item, false);
+  if (!d || (d.sets[i] && d.sets[i].d)) return null;
+  let j = i - 1, prev = null;
+  for (; j >= 0; j--) { const x = d.sets[j]; if (x && x.d && num(x.r) !== null) { prev = x; break; } }
+  if (!prev || num(prev.w) === null) return null;
+  const mode = t === 'assist' ? (d.mode || 'hilfe') : null;
+  const rg = range(item.reps), w = num(prev.w), r = effReps(prev);
+  const sp = loadSpace(item.ex, mode, w);
+  if (!sp) return null;
+  let nw = null, up = false;
+  if (r >= rg.hi + 5 && !d.pain) { nw = upFrom(sp, w, r, rg); up = true; }
+  else if (num(prev.r) < rg.lo - 2) nw = downFrom(sp, w, r, rg);
+  if (nw === null) return null;
+  useListFor(item.ex);
+  return { w: nw, up: up, text: 'Satz ' + (j + 1) + ' lag mit ' + fmtNum(num(prev.r)) + ' Wiederholungen deutlich ' + (up ? 'über ' + rg.hi : 'unter ' + rg.lo) +
+    ': nimm jetzt ' + wUnit(item.ex, nw, mode) + ' und versuch wieder ' + rg.lo + '–' + rg.hi };
+}
+
 /* Nach längerer Pause etwas leichter einsteigen */
 const BREAK_DAYS = 14;
 function daysBetween(a, b) { return Math.round((parseDate(b) - parseDate(a)) / 86400000); }
@@ -1272,10 +1423,18 @@ function lighter(item, w) {
   if (ex.eq === 'lh') return Math.max(0, Math.floor(target / 2.5) * 2.5);
   if (ex.eq === 'scheibe') { const v = Math.floor(target / 1.25) * 1.25; return v < w * 0.75 ? w : v; }
   if (ex.eq === 'kh') return khFloor(target);
+  const L = wList(item.ex, w);
+  if (L) {
+    let v = lFloor(L, target);
+    if (v >= w - 0.01) { const p = lPrev(L, w); v = p === null ? w : p; }
+    return v;
+  }
   const st = machineStep(item.ex);
   const n = Math.max(1, Math.round((w * 0.1) / st));
-  return Math.max(0, Math.round((w - n * st) * 10) / 10);
+  return Math.max(0, Math.round((w - n * st) * 100) / 100);
 }
+/* Mehr Hilfe bei Dips und Klimmzügen: die nächste Stufe am Stapel */
+function moreHelp(w) { const n = lNext(STACK_LIST, w); return n === null ? w : n; }
 
 /* Vorschlag für heute */
 function suggestion(item) {
@@ -1333,7 +1492,7 @@ function suggestion(item) {
     if (w === null) { res.text = since + 'heute etwa 10 % leichter als zuletzt'; return res; }
     if (t === 'assist') {
       if (last.data.mode === 'zusatz') { res.next = Math.max(0, w - 2); res.text = since + 'heute weniger Zusatzgewicht, etwa ' + fmtNum(res.next) + ' kg'; }
-      else { res.next = Math.round((w + machineStep(item.ex)) * 10) / 10; res.text = since + 'heute etwas mehr Hilfe, etwa ' + fmtNum(res.next) + ' kg'; }
+      else { res.next = moreHelp(w); res.text = since + 'heute etwas mehr Hilfe, etwa ' + fmtNum(res.next) + ' kg'; }
       return res;
     }
     res.next = lighter(item, w);
@@ -1349,7 +1508,7 @@ function suggestion(item) {
     if (twice) { res.text = 'Zweimal hintereinander gezwickt: tausch die Übung gegen eine ähnliche an der Maschine'; return res; }
     if (t === 'time' || t === 'reps') { res.text = 'Letztes Mal hat es gezwickt: heute nicht mehr als letztes Mal. Zwickt es wieder, tausch die Übung'; return res; }
     if (w !== null) {
-      if (t === 'assist') res.next = last.data.mode === 'zusatz' ? Math.max(0, w - 2) : Math.round((w + machineStep(item.ex)) * 10) / 10;
+      if (t === 'assist') res.next = last.data.mode === 'zusatz' ? Math.max(0, w - 2) : moreHelp(w);
       else res.next = lighter(item, w);
     }
     res.text = 'Letztes Mal hat es gezwickt: heute nicht steigern, lieber etwas weniger' +
@@ -1377,68 +1536,63 @@ function suggestion(item) {
     res.text = 'Gleiches Gewicht, etwas weiter';
     return res;
   }
-  if (!allTop) {
-    res.text = 'Gleiches Gewicht, mehr Wiederholungen als ' + res.reps.map(fmtNum).join(' · ');
+  /* Ab hier: Übungen mit Gewicht oder Hilfe. Gerechnet wird mit den Sätzen am Arbeitsgewicht */
+  const mode = t === 'assist' ? (last.data.mode || 'hilfe') : null;
+  const top = topSets(last.data, t);
+  const topReps = top.map(function (x) { return num(x[k]); });
+  res.reps = topReps.slice();
+  while (res.reps.length && res.reps.length < planned) res.reps.push(res.reps[res.reps.length - 1]);
+  const rMed = median(top.map(effReps));
+  const allTopW = sets.length >= planned && topReps.length > 0 && topReps.every(function (v) { return v >= rg.hi; });
+  const big = rMed !== null && rMed >= rg.hi + 5;
+  const sp = w !== null ? loadSpace(item.ex, mode, w) : null;
+  const moreTxt = 'Gleiches Gewicht, mehr Wiederholungen als ' + topReps.map(fmtNum).join(' · ');
+  if (w === null || !sp || rMed === null) {
+    res.text = allTopW ? 'Alle Sätze oben: heute etwas mehr Gewicht' : moreTxt;
     return res;
   }
-  /* Reserve ist freiwillig: nur wenn eingetragen und bei einem Satz nichts mehr ging, wird nicht gesteigert */
-  if (ex.comp && sets.some(function (x) { return x.rir === 0; })) {
-    res.text = 'Obere Zahl geschafft, aber mindestens ein Satz ging bis ans Limit. Bleib bei ' + (w !== null ? fmtNum(w) + ' kg' : 'diesem Gewicht') + (t === 'assist' && last.data.mode !== 'zusatz' ? ' Hilfe' : '') + ', bis überall noch eine Wiederholung übrig bleibt';
-    return res;
-  }
-  res.up = true;
-  /* Überall 3+ Reserve: das war deutlich zu leicht, dann zwei Stufen auf einmal */
-  /* Deutlich zu leicht: in allen Sätzen 3 oder mehr über der oberen Zahl (früher auch per Reserve-Knopf „3+“) */
-  const overTop = sets.length > 0 && sets.every(function (x) { return num(x[k]) >= rg.hi + 3; });
-  const easy = overTop || (sets.length > 0 && sets.every(function (x) { return x.rir === 3; }));
-  const easyWhy = overTop ? 'Deutlich über der oberen Zahl' : 'Alle Sätze oben und überall 3+ übrig';
-  /* Zwei Stufen nur, wenn das zusammen höchstens 25 % mehr sind, sonst fällst du unter den Wiederholungsbereich */
-  const twoOk = function (two) { return easy && w > 0 && (two - w) / w <= 0.25; };
-  let steps = 1;
-  const leadFor = function (n) { return n === 2 ? easyWhy + ': heute zwei Stufen mehr, ' : (easy ? easyWhy + ': heute ' : 'Alle Sätze oben: heute '); };
-  if (w === null && t !== 'assist') { res.text = 'Alle Sätze oben: heute etwas mehr Gewicht'; return res; }
-  if (t === 'assist') {
-    if (last.data.mode === 'zusatz') { res.text = 'Alle Sätze oben: heute 1–2 kg mehr Zusatzgewicht'; return res; }
-    if (w !== null) {
-      const st = machineStep(item.ex);
-      res.next = Math.max(0, Math.round((w - st) * 10) / 10);
-      res.text = 'Alle Sätze oben: heute eine Stufe weniger Hilfe, etwa ' + fmtNum(res.next) + ' kg';
-    } else res.text = 'Alle Sätze oben: heute eine Stufe weniger Hilfe';
-    return res;
-  }
-  let smallStep = false;
-  if (ex.eq === 'kh') {
-    const one = khNext(w), two = khNext(one);
-    if (twoOk(two)) { res.next = two; steps = 2; } else res.next = one;
-    smallStep = res.next - w <= 1.01;
-    res.text = leadFor(steps) + kgTxt(item.ex, res.next);
-  }
-  else if (ex.eq === 'lh') {
-    if (twoOk(w + 5)) { res.next = w + 5; steps = 2; } else res.next = w + 2.5;
-    res.text = leadFor(steps) + fmtNum(res.next) + ' kg';
-  }
-  else if (ex.eq === 'scheibe') {
-    if (!w) { res.next = 1.25; res.text = 'Alle Sätze oben: heute mit Scheibe, 1,25–2,5 kg'; }
-    else { if (twoOk(w + 2.5)) { res.next = w + 2.5; steps = 2; } else res.next = w + 1.25; res.text = leadFor(steps) + fmtNum(res.next) + ' kg'; }
-  } else {
-    const st = machineStep(item.ex);
-    if (twoOk(w + 2 * st)) { res.next = Math.round((w + 2 * st) * 100) / 100; steps = 2; } else res.next = Math.round((w + st) * 100) / 100;
-    res.text = leadFor(steps) + (steps === 2 ? '' : 'eine Stufe mehr, ') + 'etwa ' + fmtNum(res.next) + ' kg' + (st >= 4 && !easy ? '. Ist die Stufe zu groß, nimm ein Aufsteckgewicht' : '');
-  }
-  /* Ist die nächste Stufe mehr als 20 % schwerer, erst 3 Wiederholungen über die obere Zahl gehen.
-     Nicht bei 3+ Reserve und nicht, wenn es schon der kleinste Hantelschritt von 1 kg ist */
-  if (!smallStep && w > 0 && res.next && (res.next - w) / w > 0.2) {
-    const nextW = res.next, over = rg.hi + 3;
-    const pct = Math.round((nextW - w) / w * 100);
-    /* Eingetragene Reserve zählt mit: 15 Wiederholungen mit 3 Reserve entsprechen 18 */
-    if (!sets.every(function (x) { return num(x[k]) + (typeof x.rir === 'number' ? x.rir : 0) >= over; })) {
-      res.up = false; res.next = undefined;
-      res.text = 'Die nächste Stufe, ' + fmtNum(nextW) + ' kg, wäre ' + pct + ' % mehr. Bleib erst bei ' + fmtNum(w) + ' kg, bis du in allen Sätzen ' + over + ' Wiederholungen schaffst. Mach dafür ruhig mehr als die obere Zahl, solange es sauber bleibt' +
-        ((ex.eq === 'maschine' || ex.eq === 'kabel') && machineStep(item.ex) >= 4 ? ', oder nimm ein Aufsteckgewicht' : '');
-    } else {
-      res.text = 'Bereit für den Sprung: heute ' + fmtNum(nextW) + ' kg, dann wieder ab ' + rg.lo + ' Wiederholungen';
+  const W = sp.to(w);
+  /* Deutlich unter der unteren Zahl: leichter */
+  if (rMed < rg.lo - 2) {
+    const dn = downFrom(sp, w, rMed, rg);
+    if (dn !== null) {
+      res.next = dn; res.reps = [];
+      res.text = 'Letztes Mal deutlich unter ' + rg.lo + ' Wiederholungen: heute ' + wUnit(item.ex, dn, mode) + ', dann wieder hocharbeiten';
+      return res;
     }
   }
+  if (!allTopW && !big) { res.text = moreTxt; return res; }
+  /* Reserve ist freiwillig: nur wenn eingetragen und bei einem Satz nichts mehr ging, wird nicht gesteigert */
+  if (!big && ex.comp && top.some(function (x) { return x.rir === 0; })) {
+    res.text = 'Obere Zahl geschafft, aber mindestens ein Satz ging bis ans Limit. Bleib bei ' + wUnit(item.ex, w, mode) + ', bis überall noch eine Wiederholung übrig bleibt';
+    return res;
+  }
+  const up = upFrom(sp, w, rMed, rg);
+  if (up !== null) {
+    res.up = true; res.next = up;
+    const pred = repsAt(W, rMed, sp.to(up));
+    if (big) {
+      res.text = 'Letztes Mal deutlich über der oberen Zahl: heute ' + wUnit(item.ex, up, mode) +
+        (ex.comp ? ', solange die Form sauber bleibt' : '') +
+        '. Liegt der erste Satz wieder bei ' + (rg.hi + 5) + ' oder mehr, legt die App im nächsten Satz nach';
+    } else {
+      res.text = 'Alle Sätze oben: heute ' + wUnit(item.ex, up, mode) + ', dann wieder ab ' + rg.lo + ' Wiederholungen' +
+        (pred < rg.lo - 0.5 ? '. Großer Schritt: Schaffst du damit erst weniger als ' + rg.lo + ', ist das in Ordnung' : '');
+    }
+    return res;
+  }
+  /* Alle Sätze oben, aber die nächste Stufe ist zu groß: erst mehr Wiederholungen */
+  const s = lNext(sp.list, W);
+  if (s === null) {
+    res.text = t === 'assist' && mode === 'hilfe'
+      ? 'Alle Sätze oben ohne Hilfe: stell auf „mit Zusatzgewicht“ und beginne mit 1,25–2,5 kg'
+      : 'Alle Sätze oben, schwerer geht es hier nicht. Mach mehr Wiederholungen und lass langsamer ab';
+    return res;
+  }
+  const need = Math.max(rg.hi + 1, repsNeeded(W, s, rg.lo));
+  const pct = Math.round((s - W) / W * 100);
+  res.text = 'Die nächste Stufe, ' + wUnit(item.ex, sp.from(s), mode) + ', ist ' + pct + ' % schwerer. Bleib bei ' + wUnit(item.ex, w, mode) +
+    ', bis du in allen Sätzen ' + need + ' Wiederholungen schaffst. Schaffst du in einem Satz ' + Math.max(need, rg.hi + 5) + ', geht es im nächsten Satz direkt schwerer';
   return res;
 }
 function warmText(item, sug) {
@@ -1447,7 +1601,8 @@ function warmText(item, sug) {
   const t = EX[item.ex].t;
   if (t === 'assist') return item.warm === 2 ? '+ 2 Aufwärmsätze mit mehr Hilfe: × 8 und × 4' : '+ 1 Aufwärmsatz mit mehr Hilfe: × 8';
   const base = sug.next || sug.w;
-  const r = function (x) { return EX[item.ex].eq === 'kh' ? kgTxt(item.ex, khNearest(x)) : (EX[item.ex].eq === 'lh' ? fmtNum(Math.round(x / 2.5) * 2.5) + ' kg' : 'etwa ' + fmtNum(Math.round(x * 2) / 2) + ' kg'); };
+  const L = EX[item.ex].eq === 'kh' ? null : wList(item.ex, base);
+  const r = function (x) { return EX[item.ex].eq === 'kh' ? kgTxt(item.ex, khNearest(x)) : (L ? fmtNum(lNearest(L, x)) + ' kg' : 'etwa ' + fmtNum(Math.round(x * 2) / 2) + ' kg'); };
   if (!base) return item.warm === 2 ? '+ 2 Aufwärmsätze: 50 % × 8, 75 % × 4' : '+ 1 Aufwärmsatz: 50 % × 8';
   return item.warm === 2 ? '+ 2 Aufwärmsätze: ' + r(base * 0.5) + ' × 8, ' + r(base * 0.75) + ' × 4' : '+ 1 Aufwärmsatz: ' + r(base * 0.5) + ' × 8';
 }
@@ -1707,7 +1862,7 @@ function renderExercise(item) {
   const wt = warmText(item, sug); if (wt) extras.push(wt);
   if (item.from30 && S.date < STEP_DATE) extras.push('Ab 30. Nov.: ' + item.from30 + ' Sätze');
   if (item.note) extras.push(item.note);
-  if (showExtra(item)) extras.push(item.home ? 'Danach Extrasatz links' : 'Danach Extrasatz links mit etwa halbem Gewicht');
+  if (showExtra(item)) extras.push(item.home ? 'Danach Extrasatz links' : 'Danach Extrasatz nur links mit weniger Gewicht');
   if (extras.length) tg.appendChild(document.createTextNode(' ' + extras.join('. ')));
   art.appendChild(tg);
   art.appendChild(el('p', 'cue', item.cue));
@@ -1721,11 +1876,21 @@ function renderExercise(item) {
     if (last.data.pain) l.appendChild(document.createTextNode(' (hat gezwickt)'));
     art.appendChild(l);
   }
-  if (sug.text) art.appendChild(el('p', 'hint', sug.text));
+  if (sug.text && !changedInSession(item, sug)) art.appendChild(el('p', 'hint', sug.text));
+  {
+    const dd = exData(item, false);
+    const nOpen = Math.max(n, dd ? dd.sets.length : 0);
+    for (let i = 1; i < nOpen; i++) {
+      if (dd && dd.sets[i] && dd.sets[i].d) continue;
+      const adj = sessionAdjust(item, i);
+      if (adj) art.appendChild(el('p', 'hint', adj.text));
+      break;
+    }
+  }
   const stall = (sug.comeback || sug.pain) ? null : stallInfo(item);
   if (stall && last) {
     const w = entryWeight(last.data, t);
-    const tip = (t === 'assist' && last.data.mode !== 'zusatz') ? 'Nimm etwas mehr Hilfe' : (w ? 'Senk das Gewicht um 10 % auf etwa ' + fmtNum(Math.round(w * 0.9 * 2) / 2) + ' kg' : 'Senk das Gewicht um 10 %');
+    const tip = (t === 'assist' && last.data.mode !== 'zusatz') ? 'Nimm etwas mehr Hilfe' : (w ? 'Senk das Gewicht um 10 % auf ' + fmtNum(lighter(item, w)) + ' kg' : 'Senk das Gewicht um 10 %');
     art.appendChild(el('p', 'stall', 'Seit ' + stall + ' Einheiten kein Fortschritt. ' + tip + ' und arbeite dich neu hoch.'));
   }
 
@@ -1775,6 +1940,11 @@ function renderMode(item) {
 
 /* Was im Feld stehen soll: der vorige Satz derselben Einheit, sonst der Vorschlag */
 function defaultFor(item, i, sug, key) {
+  const adj = sessionAdjust(item, i);
+  if (adj) {
+    if (key === 'w') return fmtNum(adj.w);
+    if (key === mainKey(EX[item.ex].t)) return String(range(item.reps).lo);
+  }
   if (typeof i === 'number' && i > 0) {
     const d = exData(item, false);
     for (let j = i - 1; j >= 0; j--) {
@@ -1790,7 +1960,9 @@ function placeholderFor(item, i, sug, key) {
     const lx = lastEntry(item.ex);
     if (lx && lx.data.extra && num(lx.data.extra.w) !== null) return fmtNum(num(lx.data.extra.w));
     const base = sug.next || sug.w;
-    return base ? fmtNum(Math.round(base / 2)) : '';
+    if (!base) return '';
+    const L = wList(item.ex, base);
+    return fmtNum(L ? lFloor(L, base / 2) : Math.round(base / 2));
   }
   if (key === 'w') {
     if (sug.next) return fmtNum(sug.next);
@@ -1925,7 +2097,11 @@ function markDone(item, i, inputs) {
 function toggleDone(item, i, inputs, btn) {
   const row = rowFor(item, i);
   if (row.d) { row.d = false; btn.setAttribute('aria-pressed', 'false'); touch(); updateNext(); return; }
-  if (markDone(item, i, inputs)) { btn.setAttribute('aria-pressed', 'true'); updateNext(); }
+  if (markDone(item, i, inputs)) {
+    btn.setAttribute('aria-pressed', 'true'); updateNext();
+    /* Liegt der Satz weit daneben, gleich neu zeichnen, damit der nächste Satz das angepasste Gewicht zeigt */
+    if (typeof i === 'number' && sessionAdjust(item, i + 1)) render();
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -2108,14 +2284,21 @@ function renderFocus(app, wo) {
   }
   const tg = el('p', 'f-target');
   tg.appendChild(el('strong', '', slot.i === 'x' ? 'Extrasatz links' : targetOf(item)));
-  if (slot.i === 'x') tg.appendChild(document.createTextNode(' mit etwa halbem Gewicht, bis nichts mehr geht; danach halbe Wiederholungen unten zählen auch'));
-  else if (item.note) tg.appendChild(document.createTextNode(' ' + item.note));
+  if (slot.i === 'x') tg.appendChild(document.createTextNode(' ' + EXTRA_WHY));
+  else {
+    const bits = [];
+    if (item.note) bits.push(item.note);
+    if ((t === 'wr' || t === 'assist') && !item.home && !isDeload(S.date)) bits.push(STOP_RULE);
+    if (bits.length) tg.appendChild(document.createTextNode(' ' + bits.join('. ')));
+  }
   card.appendChild(tg);
 
   const last = shownEntry(item);
-  if ((sug.text && slot.i !== 'x') || last) {
+  const adj = sessionAdjust(item, slot.i);
+  const hintTxt = adj ? adj.text : (slot.i !== 'x' && !changedInSession(item, sug) ? sug.text : '');
+  if (hintTxt || last) {
     const h = el('p', 'f-hint');
-    if (sug.text && slot.i !== 'x') h.appendChild(el('b', '', sug.text + '. '));
+    if (hintTxt) h.appendChild(el('b', '', hintTxt + '. '));
     if (last) {
       const wtx = weightText(last.data, t);
       h.appendChild(el('span', 'f-last', 'Zuletzt: ' + (wtx ? wtx + ', ' : '') + setsText(last.data, t, item.side) + (last.data.pain ? ' (hat gezwickt)' : '')));
@@ -2151,7 +2334,8 @@ function renderFocus(app, wo) {
       pair[0].addEventListener('click', function () {
         const base = num(inp.value) !== null ? num(inp.value) : (num(inp.placeholder) !== null ? num(inp.placeholder) : 0);
         let v;
-        if (f.k === 'w' && EX[item.ex].eq === 'kh') { useListFor(item.ex); v = pair[1] > 0 ? khNext(base) : khPrev(base); }
+        const L = f.k === 'w' ? btnList(item, slot.i, d, base) : null;
+        if (L) { const nv = pair[1] > 0 ? lNext(L, base) : lPrev(L, base); v = nv === null ? base : nv; }
         else { const step = stepFor(item, f.k, base, pair[1]); v = Math.max(0, Math.round((base + pair[1] * step) * 100) / 100); }
         inp.value = fmtNum(v); writeVal(item, slot.i, f.k, inp.value);
       });
@@ -2310,9 +2494,11 @@ function renderRest(wrap, order) {
     pv.appendChild(el('b', '', next.item.k + ' ' + exName(next.item)));
     let info = setLabelOf(order, next) + ', Ziel ' + (next.i === 'x' ? 'Extrasatz links' : targetOf(next.item));
     const sg = suggestion(next.item);
-    const w = next.i === 'x' ? placeholderFor(next.item, 'x', sg, 'w') : (sg.next ? fmtNum(sg.next) : (sg.w !== null && sg.w !== undefined ? fmtNum(sg.w) : ''));
+    const w = defaultFor(next.item, next.i, sg, 'w');
     if (w && (EX[next.item.ex].t === 'wr' || EX[next.item.ex].t === 'carry')) info += ', ' + w + ' kg';
     pv.appendChild(el('span', '', info));
+    const nadj = sessionAdjust(next.item, next.i);
+    if (nadj) pv.appendChild(el('span', 'rest-adj', nadj.text));
     const nc = el('p', 'f-cue'); nc.style.margin = '10px 0 0'; nc.style.padding = '0'; nc.style.background = 'none';
     nc.appendChild(el('b', '', 'Worauf achten: ')); nc.appendChild(document.createTextNode(next.item.cue));
     pv.appendChild(nc);
